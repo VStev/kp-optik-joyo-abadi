@@ -1,11 +1,11 @@
-package com.kp.optikjoyoabadi.UI
+package com.kp.optikjoyoabadi.userinterface.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
-class LoginSignupActivity : AppCompatActivity() {
+class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login_signup)
+        setContentView(R.layout.activity_splash_screen)
     }
 }
