@@ -10,7 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OptikJoyoAbadi">
         <activity
-            android:name=".userinterface.activity.LoginSignupActivity"
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.loginsignup.LoginSignupActivity"
             android:exported="true" />
         <activity
             android:name=".userinterface.activity.SplashScreenActivity"

@@ -1,4 +1,4 @@
-package com.kp.optikjoyoabadi.userinterface.activity
+package com.kp.optikjoyoabadi.ui.loginsignup
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
