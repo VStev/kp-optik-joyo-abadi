@@ -1,6 +1,6 @@
 package com.kp.optikjoyoabadi.model
 
-//import com.google.firebase.Timestamp
+import com.google.firebase.Timestamp
 
 data class Transaction(
     val transactionId: String = "",
@@ -15,6 +15,6 @@ data class Transaction(
     val status: String = "",
     val subtotal: Int = 0,
     val shippingFee: Int = 0,
-    val total: Int = 0
-//    val dateTime: Timestamp = Timestamp.now()
+    val total: Int = 0,
+    val dateTime: Timestamp = Timestamp.now()
 )
