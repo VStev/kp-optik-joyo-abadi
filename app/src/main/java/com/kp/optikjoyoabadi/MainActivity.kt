@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -16,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityMainBinding
     private val fireDB = Firebase.firestore
+    private lateinit var argument: String
 
     companion object {
         const val EXTRA_ARGUMENT = "old"
@@ -25,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
         val logged = auth.currentUser
+        argument = intent.getStringExtra(EXTRA_ARGUMENT).toString()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 //        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer)
@@ -48,6 +51,10 @@ class MainActivity : AppCompatActivity() {
                     .addOnFailureListener {
                         Toast.makeText(baseContext, "Fail to register token", Toast.LENGTH_LONG).show()
                     }
+            }
+            if (argument == "new"){
+                val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+
             }
         }
     }

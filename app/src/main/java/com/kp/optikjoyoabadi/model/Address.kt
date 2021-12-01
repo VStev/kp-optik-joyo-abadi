@@ -8,6 +8,7 @@ data class Address(
     val region: String,
     val city: String,
     val postalCode: Int,
-    val phoneNumber: String
+    val phoneNumber: String,
+    val isMain: Boolean
 )
 

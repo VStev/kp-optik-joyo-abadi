@@ -10,11 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OptikJoyoAbadi">
         <activity
+            android:name=".ui.transactiondetail.TransactionDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.loginsignup.SignUpActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

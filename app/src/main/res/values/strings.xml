@@ -12,4 +12,8 @@
     <string name="daftar_akun">Daftar akun</string>
     <string name="konfirmasi_password">Konfirmasi Password</string>
     <string name="token_fmt">%s</string>
+    <string name="image_desc_thumbnail">Gambar Produk</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="belum_ada_transaksi">Belum ada transaksi</string>
 </resources>
