@@ -16,4 +16,6 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="belum_ada_transaksi">Belum ada transaksi</string>
+    <string name="subtotal">SUBTOTAL</string>
+    <string name="checkout">CHECKOUT</string>
 </resources>

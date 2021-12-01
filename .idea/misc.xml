@@ -3,18 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/OptikJoyoAbadi/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3609375" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/drawable/welcome_alert_bg.xml" value="0.3609375" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/activity_login.xml" value="0.24864130434782608" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/activity_login_signup.xml" value="0.3458333333333333" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/activity_main.xml" value="0.34193840579710144" />
+        <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/activity_product_detail.xml" value="0.33" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/activity_sign_up.xml" value="0.34479166666666666" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/activity_splash_screen.xml" value="0.16084093211752787" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/activity_transaction_detail.xml" value="0.34193840579710144" />
+        <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/fragment_cart.xml" value="0.33" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/fragment_fullscreen.xml" value="0.32563405797101447" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/fragment_home.xml" value="0.34193840579710144" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/fragment_home_screen.xml" value="0.34479166666666666" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/fragment_product_list.xml" value="0.5" />
-        <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/fragment_transaction_list.xml" value="0.18" />
+        <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/fragment_transaction_list.xml" value="0.33" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/item_address.xml" value="0.5" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/item_products.xml" value="0.5" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/item_transaction_details.xml" value="0.34193840579710144" />
