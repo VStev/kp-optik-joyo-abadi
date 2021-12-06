@@ -12,6 +12,7 @@ import com.google.firebase.storage.StorageReference
 import com.kp.optikjoyoabadi.GlideApp
 import com.kp.optikjoyoabadi.databinding.ItemProductsBinding
 import com.kp.optikjoyoabadi.model.Product
+import com.kp.optikjoyoabadi.ui.productdetail.ProductDetailActivity
 
 open class ProductAdapter(query: Query, private val reference: StorageReference): FirestoreAdapter<ProductAdapter.CardViewHolder>(query) {
 
@@ -27,12 +28,11 @@ open class ProductAdapter(query: Query, private val reference: StorageReference)
                 .load(image)
                 .override(256,256)
                 .into(items.productPictureThumb)
-//            items.root.setOnClickListener {
-//                val intent = Intent(items.root.context, AddEditProductActivity::class.java)
-//                intent.putExtra(AddEditProductActivity.EXTRA_ID, product?.productId)
-//                intent.putExtra(AddEditProductActivity.EXTRA_ARGUMENT, "b")
-//                items.root.context.startActivity(intent)
-//            }
+            items.root.setOnClickListener {
+                val intent = Intent(items.root.context, ProductDetailActivity::class.java)
+                intent.putExtra(ProductDetailActivity.EXTRA_ID, product?.productId)
+                items.root.context.startActivity(intent)
+           }
         }
     }
 

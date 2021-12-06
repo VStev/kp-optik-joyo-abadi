@@ -10,7 +10,7 @@ import com.google.firebase.firestore.ktx.toObject
 import com.kp.optikjoyoabadi.databinding.ItemTransactionsBinding
 import com.kp.optikjoyoabadi.model.Transaction
 
-open class TransactionAdapter(query: Query): FirestoreAdapter<TransactionAdapter.CardViewHolder>(query) {
+open class TransactionAdapter(query: Query?): FirestoreAdapter<TransactionAdapter.CardViewHolder>(query) {
 
     inner class CardViewHolder(private val items: ItemTransactionsBinding) : RecyclerView.ViewHolder(items.root) {
         fun bind(data: DocumentSnapshot) {

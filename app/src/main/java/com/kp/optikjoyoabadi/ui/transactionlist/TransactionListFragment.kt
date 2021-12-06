@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.ktx.firestore
@@ -20,6 +21,7 @@ class TransactionListFragment : Fragment() {
 
     private lateinit var transactionAdapter: TransactionAdapter
     private val fireDB = Firebase.firestore
+    private val auth = Firebase.auth
     private var _binding: FragmentTransactionListBinding? = null
     private val binding get() = _binding!!
 
@@ -46,7 +48,10 @@ class TransactionListFragment : Fragment() {
         //remove after development
         FirebaseFirestore.setLoggingEnabled(true)
         val rv: RecyclerView = view.findViewById(R.id.rv_transaction_item)
-        val query = fireDB.collection("Products")
+        val query = auth.currentUser?.let {
+            fireDB.collection("Transactions")
+                .whereArrayContains("consumerId", it.uid)
+        }
         transactionAdapter = object : TransactionAdapter(query) {
             override fun onDataChanged() {
                 super.onDataChanged()

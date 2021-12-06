@@ -1,16 +1,14 @@
 package com.kp.optikjoyoabadi
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.kp.optikjoyoabadi.databinding.ActivityMainBinding
-import com.kp.optikjoyoabadi.ui.loginsignup.LoginActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,10 +33,7 @@ class MainActivity : AppCompatActivity() {
 //        if (navController != null) {
 //            binding.navbarMain.setupWithNavController(navController)
 //        }
-        if (logged == null){
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        }else{
+        if (logged != null){
             FirebaseMessaging.getInstance().token.addOnSuccessListener {
                 val tokenized = getString(R.string.token_fmt, it)
                 fireDB.collection("Users").document(logged.uid)

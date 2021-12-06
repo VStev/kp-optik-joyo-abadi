@@ -15,16 +15,13 @@ class CartFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var adapter: CartAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart, container, false)
+        _binding = FragmentCartBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     private fun updateUI(){

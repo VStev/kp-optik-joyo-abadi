@@ -7,7 +7,9 @@ import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
@@ -28,18 +30,22 @@ class SignUpActivity : AppCompatActivity() {
         setListeners()
     }
 
-    private fun updateUI(user: FirebaseUser){
+    private fun updateUI(user: FirebaseUser, name: String) {
         FirebaseMessaging.getInstance().token
             .addOnSuccessListener {
-            val tokenized = getString(R.string.token_fmt, it)
-            fireDB.collection("Users").document(user.uid)
-                .set(
-                    mapOf(
-                        "UID" to user.uid,
-                        "FCMTOKEN" to tokenized,
-                        "Type" to "User"
+                val profileUpdate = userProfileChangeRequest{
+                    displayName = name
+                }
+                user.updateProfile(profileUpdate)
+                val tokenized = getString(R.string.token_fmt, it)
+                fireDB.collection("Users").document(user.uid)
+                    .set(
+                        mapOf(
+                            "UID" to user.uid,
+                            "FCMTOKEN" to tokenized,
+                            "Type" to "User"
+                        )
                     )
-                )
                 val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra(MainActivity.EXTRA_ARGUMENT, "new")
                 startActivity(intent)
@@ -49,7 +55,7 @@ class SignUpActivity : AppCompatActivity() {
             }
     }
 
-    private fun setListeners(){
+    private fun setListeners() {
         binding.buttonLogin.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
@@ -61,28 +67,35 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun signUp() {
+        val displayName = binding.inputName.text.toString()
         val email = binding.inputEmail.text.toString()
-        if (email == ""){
+        if (email == "") {
             Toast.makeText(baseContext, "Email tidak boleh kosong!", Toast.LENGTH_SHORT).show()
-        }else{
-            if (binding.inputPassword.text.toString() == binding.inputConfirmPassword.text.toString()){
+        } else if (displayName == "") {
+            Toast.makeText(baseContext, "Nama tidak boleh kosong!", Toast.LENGTH_SHORT).show()
+        } else {
+            if (binding.inputPassword.text.toString() == binding.inputConfirmPassword.text.toString()) {
                 val password = binding.inputPassword.text.toString()
                 auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener {
-                        if (it.isSuccessful){
+                        if (it.isSuccessful) {
                             val user = auth.currentUser
                             user?.sendEmailVerification()
                             if (user != null) {
-                                updateUI(user)
+                                updateUI(user, displayName)
                             }
                         }
                     }
-            }else if (binding.inputPassword.text.isNullOrBlank() || binding.inputPassword.text.isNullOrEmpty()
-                || binding.inputConfirmPassword.text.isNullOrBlank() || binding.inputConfirmPassword.text.isNullOrEmpty()){
-                Toast.makeText(baseContext, "Password tidak boleh kosong!", Toast.LENGTH_SHORT).show()
-            }else{
-                Toast.makeText(baseContext, "Password tidak sama",
-                    Toast.LENGTH_SHORT).show()
+            } else if (binding.inputPassword.text.isNullOrBlank() || binding.inputPassword.text.isNullOrEmpty()
+                || binding.inputConfirmPassword.text.isNullOrBlank() || binding.inputConfirmPassword.text.isNullOrEmpty()
+            ) {
+                Toast.makeText(baseContext, "Password tidak boleh kosong!", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                Toast.makeText(
+                    baseContext, "Password tidak sama",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

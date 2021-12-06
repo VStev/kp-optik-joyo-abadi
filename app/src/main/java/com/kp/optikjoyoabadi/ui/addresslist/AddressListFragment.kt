@@ -1,10 +1,10 @@
-package com.kp.optikjoyoabadi.ui.productlist
+package com.kp.optikjoyoabadi.ui.addresslist
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -12,53 +12,49 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
 import com.kp.optikjoyoabadi.R
-import com.kp.optikjoyoabadi.adapters.ProductAdapter
-import com.kp.optikjoyoabadi.databinding.FragmentProductListBinding
+import com.kp.optikjoyoabadi.adapters.AddressAdapter
+import com.kp.optikjoyoabadi.databinding.FragmentAddressListBinding
 
-class ProductListFragment : Fragment() {
+class AddressListFragment : Fragment() {
 
-    private lateinit var productAdapter: ProductAdapter
+    private lateinit var addressAdapter: AddressAdapter
     private val fireDB = Firebase.firestore
-    private var _binding: FragmentProductListBinding? = null
+    private var _binding: FragmentAddressListBinding? = null
     private val binding get() = _binding!!
 
     override fun onStart() {
         super.onStart()
-        productAdapter.startListening()
+        addressAdapter.startListening()
     }
 
     override fun onStop() {
         super.onStop()
-        productAdapter.stopListening()
+        addressAdapter.stopListening()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentProductListBinding.inflate(inflater, container, false)
-        setHasOptionsMenu(true)
+        _binding = FragmentAddressListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //remove the line of code below after done developing
+        //remove after development
         FirebaseFirestore.setLoggingEnabled(true)
-        //remove the line of code above after done developing
-        val rv: RecyclerView = view.findViewById(R.id.recycler_product)
-        val query = fireDB.collection("Products")
-        val reference = Firebase.storage.reference
-        productAdapter = object : ProductAdapter(query, reference) {
+        val rv: RecyclerView = view.findViewById(R.id.recycler_address)
+        val query = fireDB.collection("Transactions")
+        addressAdapter = object : AddressAdapter(query) {
             override fun onDataChanged() {
                 super.onDataChanged()
                 if (itemCount == 0){
-                    binding.recyclerProduct.visibility = View.GONE
+                    binding.recyclerAddress.visibility = View.GONE
 //                    binding.noItemLayout.visibility = View.VISIBLE
                 }else{
-                    binding.recyclerProduct.visibility = View.VISIBLE
+                    binding.recyclerAddress.visibility = View.VISIBLE
 //                    binding.noItemLayout.visibility = View.GONE
                 }
             }
@@ -69,7 +65,7 @@ class ProductListFragment : Fragment() {
         }
         with (rv){
             layoutManager = LinearLayoutManager(context)
-            adapter = productAdapter
+            adapter = addressAdapter
         }
     }
 }
