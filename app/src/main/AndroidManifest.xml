@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OptikJoyoAbadi">
         <activity
+            android:name=".ui.editprofile.EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.transactionlist.TransactionListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.addresslist.AddressListActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.addaddress.AddAddressActivity"
             android:exported="false" />
         <activity

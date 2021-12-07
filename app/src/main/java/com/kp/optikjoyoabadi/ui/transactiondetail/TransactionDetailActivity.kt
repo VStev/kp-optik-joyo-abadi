@@ -5,9 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.EditText
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -17,7 +15,6 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import com.kp.optikjoyoabadi.R
 import com.kp.optikjoyoabadi.adapters.TransactionDetailAdapter
 import com.kp.optikjoyoabadi.databinding.ActivityTransactionDetailBinding
 import com.kp.optikjoyoabadi.model.Transaction
@@ -50,7 +47,7 @@ class TransactionDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         transactionId = intent.getStringExtra(EXTRA_ID).toString()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        setContentView()
+        showLayout()
         setOnClickListeners()
     }
 
@@ -63,7 +60,7 @@ class TransactionDetailActivity : AppCompatActivity() {
                 .addOnSuccessListener {
                     Toast.makeText(baseContext, "Pesanan telah dibatalkan.",
                         Toast.LENGTH_SHORT).show()
-                    setContentView()
+                    showLayout()
                 }
                 .addOnFailureListener {
                     Toast.makeText(baseContext, "Gagal mengubah status pesanan! $it",
@@ -78,7 +75,7 @@ class TransactionDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun setContentView() {
+    private fun showLayout() {
         //remove the line of code below after done developing
         FirebaseFirestore.setLoggingEnabled(true)
         //remove the line of code above after done developing

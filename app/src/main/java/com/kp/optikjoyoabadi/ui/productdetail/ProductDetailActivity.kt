@@ -2,7 +2,6 @@ package com.kp.optikjoyoabadi.ui.productdetail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.annotation.NonNull
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -30,7 +29,7 @@ class ProductDetailActivity : AppCompatActivity() {
         binding = ActivityProductDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         productId = intent.getStringExtra(EXTRA_ID).toString()
-        setLayout()
+        showLayout()
         setListeners()
     }
 
@@ -47,7 +46,7 @@ class ProductDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun setLayout() {
+    private fun showLayout() {
         val query = fireDb.collection("Products").document(productId)
         query.get()
             .addOnSuccessListener {

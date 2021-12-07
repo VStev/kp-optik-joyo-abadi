@@ -1,10 +1,8 @@
 package com.kp.optikjoyoabadi.ui.transactionlist
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -15,15 +13,14 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.kp.optikjoyoabadi.R
 import com.kp.optikjoyoabadi.adapters.TransactionAdapter
-import com.kp.optikjoyoabadi.databinding.FragmentTransactionListBinding
+import com.kp.optikjoyoabadi.databinding.ActivityTransactionListBinding
 
-class TransactionListFragment : Fragment() {
+class TransactionListActivity : AppCompatActivity() {
 
     private lateinit var transactionAdapter: TransactionAdapter
     private val fireDB = Firebase.firestore
     private val auth = Firebase.auth
-    private var _binding: FragmentTransactionListBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: ActivityTransactionListBinding
 
     override fun onStart() {
         super.onStart()
@@ -35,22 +32,20 @@ class TransactionListFragment : Fragment() {
         transactionAdapter.stopListening()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentTransactionListBinding.inflate(inflater, container, false)
-        return binding.root
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityTransactionListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setContentView()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun setContentView() {
         //remove after development
         FirebaseFirestore.setLoggingEnabled(true)
-        val rv: RecyclerView = view.findViewById(R.id.rv_transaction_item)
+        val rv: RecyclerView = findViewById(R.id.rv_transaction_item)
         val query = auth.currentUser?.let {
             fireDB.collection("Transactions")
-                .whereArrayContains("consumerId", it.uid)
+                    .whereArrayContains("consumerId", it.uid)
         }
         transactionAdapter = object : TransactionAdapter(query) {
             override fun onDataChanged() {

@@ -43,10 +43,10 @@ class ProductListActivity : AppCompatActivity() {
         argument = intent.getStringExtra(EXTRA_ARGUMENT).toString()
         binding = ActivityProductListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setLayout()
+        showLayout()
     }
 
-    private fun setLayout() {
+    private fun showLayout() {
         //remove the line of code below after done developing
         FirebaseFirestore.setLoggingEnabled(true)
         //remove the line of code above after done developing

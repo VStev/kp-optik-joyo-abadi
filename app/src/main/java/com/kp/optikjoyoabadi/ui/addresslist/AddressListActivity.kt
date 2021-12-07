@@ -1,27 +1,26 @@
 package com.kp.optikjoyoabadi.ui.addresslist
 
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.kp.optikjoyoabadi.R
 import com.kp.optikjoyoabadi.adapters.AddressAdapter
-import com.kp.optikjoyoabadi.databinding.FragmentAddressListBinding
+import com.kp.optikjoyoabadi.databinding.ActivityAddressListBinding
 
-class AddressListFragment : Fragment() {
+class AddressListActivity : AppCompatActivity() {
 
+    private lateinit var auth: FirebaseAuth
     private lateinit var addressAdapter: AddressAdapter
+    private lateinit var binding: ActivityAddressListBinding
     private val fireDB = Firebase.firestore
-    private var _binding: FragmentAddressListBinding? = null
-    private val binding get() = _binding!!
 
     override fun onStart() {
         super.onStart()
@@ -33,20 +32,22 @@ class AddressListFragment : Fragment() {
         addressAdapter.stopListening()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentAddressListBinding.inflate(inflater, container, false)
-        return binding.root
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityAddressListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        showLayout()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun showLayout() {
         //remove after development
         FirebaseFirestore.setLoggingEnabled(true)
-        val rv: RecyclerView = view.findViewById(R.id.recycler_address)
-        val query = fireDB.collection("Transactions")
+        val user = auth.currentUser
+        val rv: RecyclerView = findViewById(R.id.recycler_address)
+        val query = user?.let {
+            fireDB.collection("Address")
+                .whereArrayContains("consumerId", it.uid)
+        }
         addressAdapter = object : AddressAdapter(query) {
             override fun onDataChanged() {
                 super.onDataChanged()

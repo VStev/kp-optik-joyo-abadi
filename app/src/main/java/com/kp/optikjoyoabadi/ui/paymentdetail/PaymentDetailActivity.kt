@@ -16,11 +16,10 @@ import kotlin.properties.Delegates
 
 class PaymentDetailActivity : AppCompatActivity() {
 
-    private var _binding: ActivityPaymentDetailBinding? = null
+    private lateinit var binding: ActivityPaymentDetailBinding
     private val fireDB = Firebase.firestore
     private lateinit var transactionID: String
     private var payAmt by Delegates.notNull<Int>()
-    private val binding get() = _binding!!
 
     companion object {
         const val  EXTRA_PAYID = "payment1"
@@ -29,15 +28,20 @@ class PaymentDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivityPaymentDetailBinding.inflate(layoutInflater)
+        binding = ActivityPaymentDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         transactionID = intent.getStringExtra(EXTRA_PAYID).toString()
         payAmt = intent.getIntExtra(EXTRA_PAYMENT, 0)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        setContentView()
+        showLayout()
+        setOnClickListeners()
     }
 
-    private fun setContentView() {
+    private fun setOnClickListeners() {
+        TODO("Not yet implemented")
+    }
+
+    private fun showLayout() {
         //remove the line of code below after done developing
         FirebaseFirestore.setLoggingEnabled(true)
         //remove the line of code above after done developing

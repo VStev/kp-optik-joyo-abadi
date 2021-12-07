@@ -12,11 +12,6 @@
         android:enabled="true"/>
 
     <item
-        android:id="@+id/transactionListFragment"
-        android:title="@string/daftar_transaksi"
-        android:enabled="true"/>
-
-    <item
         android:id="@+id/profileFragment"
         android:title="@string/profil_saya"
         android:enabled="true"/>

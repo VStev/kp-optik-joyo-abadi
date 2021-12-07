@@ -25,5 +25,9 @@ data class Cart (
 
     @ColumnInfo(name = "quantity")
     @NonNull
-    var quantity: Int = 0
+    var quantity: Int = 0,
+
+    @ColumnInfo(name = "image_url")
+    @NonNull
+    var image_url: String = ""
         )

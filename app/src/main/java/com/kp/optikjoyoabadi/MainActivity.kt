@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -28,11 +30,11 @@ class MainActivity : AppCompatActivity() {
         argument = intent.getStringExtra(EXTRA_ARGUMENT).toString()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer)
-//        val navController = navHostFragment?.findNavController()
-//        if (navController != null) {
-//            binding.navbarMain.setupWithNavController(navController)
-//        }
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer)
+        val navController = navHostFragment?.findNavController()
+        if (navController != null) {
+            binding.navbarMain.setupWithNavController(navController)
+        }
         if (logged != null){
             FirebaseMessaging.getInstance().token.addOnSuccessListener {
                 val tokenized = getString(R.string.token_fmt, it)

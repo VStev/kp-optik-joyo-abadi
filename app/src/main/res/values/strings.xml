@@ -39,6 +39,11 @@
     <string name="belum_bayar">Belum bayar</string>
     <string name="beranda">Beranda</string>
     <string name="keranjang">Keranjang</string>
-    <string name="daftar_transaksi">Daftar Transaksi</string>
     <string name="profil_saya">Profil Saya</string>
+    <string name="daftar_alamat">Daftar Alamat</string>
+    <string name="daftar_transaksi">Daftar Transaksi</string>
+    <string name="profil_dan_akun">Profil dan Akun</string>
+    <string name="pengaturan_aplikasi">Pengaturan Aplikasi</string>
+    <string name="ubah_alamat">Ubah Alamat</string>
+    <string name="jadikan_alamat_utama">Jadikan Utama</string>
 </resources>
