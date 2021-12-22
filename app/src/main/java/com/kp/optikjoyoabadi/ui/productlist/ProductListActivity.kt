@@ -3,6 +3,7 @@ package com.kp.optikjoyoabadi.ui.productlist
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -71,7 +72,7 @@ class ProductListActivity : AppCompatActivity() {
             }
         }
         with (rv){
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = GridLayoutManager(context, 2)
             adapter = productAdapter
         }
     }

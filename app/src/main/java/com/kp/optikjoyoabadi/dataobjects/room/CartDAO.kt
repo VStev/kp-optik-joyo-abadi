@@ -7,7 +7,7 @@ import com.kp.optikjoyoabadi.model.Cart
 @Dao
 interface CartDAO {
     @Query("SELECT * FROM cart")
-    fun getCart(): LiveData<Cart>
+    fun getCart(): LiveData<List<Cart>>
 //    do we need rx or livedata enough? LiveData enuf
 
     @Insert(onConflict =  OnConflictStrategy.REPLACE)

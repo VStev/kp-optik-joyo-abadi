@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.google.firebase.FirebaseError.ERROR_INVALID_CREDENTIAL
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -94,8 +96,16 @@ class LoginActivity : AppCompatActivity() {
                     // If sign in fails, display a message to the user.
                     Log.w("TAG", "signIn:failure", it.exception)
                     val error = it.exception?.message
-                    Toast.makeText(baseContext, "$error",
-                        Toast.LENGTH_SHORT).show()
+                    if (retries > 3){
+                        Toast.makeText(baseContext, "",
+                                Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(baseContext, "$error",
+                                Toast.LENGTH_SHORT).show()
+                    }
+                    if (it.exception?.equals(ERROR_INVALID_CREDENTIAL) == true){
+                        retries++
+                    }
                 }
             }
     }

@@ -11,6 +11,8 @@ import com.kp.optikjoyoabadi.GlideApp
 import com.kp.optikjoyoabadi.R
 import com.kp.optikjoyoabadi.databinding.ActivityProductDetailBinding
 import com.kp.optikjoyoabadi.model.Product
+import com.kp.optikjoyoabadi.ui.cart.CartViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProductDetailActivity : AppCompatActivity() {
 
@@ -19,6 +21,8 @@ class ProductDetailActivity : AppCompatActivity() {
     private val auth = Firebase.auth
     private val reference = Firebase.storage.reference
     private lateinit var productId: String
+    private lateinit var product: Product
+    private val productviewModel: ProductDetailViewModel by viewModel()
 
     companion object {
         const val EXTRA_ID = "id"
@@ -38,7 +42,8 @@ class ProductDetailActivity : AppCompatActivity() {
             val user = auth.currentUser
             if (user != null) {
                 if (user.isEmailVerified){
-                    //add to cart
+                    //popup add note and qty
+                    productviewModel.addtoCart(product)
                 }else{
                     //alertdialog
                 }
@@ -50,7 +55,7 @@ class ProductDetailActivity : AppCompatActivity() {
         val query = fireDb.collection("Products").document(productId)
         query.get()
             .addOnSuccessListener {
-                val product = it.toObject<Product>()
+                product = it.toObject<Product>()!!
                 if (product != null){
                     val image = product.let { it1 -> reference.child(it1.image_url) }
                     GlideApp.with(binding.root)

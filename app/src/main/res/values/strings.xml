@@ -46,4 +46,15 @@
     <string name="pengaturan_aplikasi">Pengaturan Aplikasi</string>
     <string name="ubah_alamat">Ubah Alamat</string>
     <string name="jadikan_alamat_utama">Jadikan Utama</string>
+    <string name="informasi_akun">Informasi Akun</string>
+    <string name="belum_ada_item_di_keranjang">Belum ada item di keranjang</string>
+    <string name="empty_cart_image">Empty Cart Image</string>
+    <string name="ubah">Ubah</string>
+    <string name="nomor_telephone">Nomor Telephone</string>
+    <string name="batal">Batal</string>
+    <string name="simpan">Simpan</string>
+    <string name="keamanan_akun">Keamanan Akun</string>
+    <string name="password_lama">Password Lama</string>
+    <string name="password_baru">Password Baru</string>
+    <string name="konfirmasi_password_baru">Konfirmasi Password Baru</string>
 </resources>

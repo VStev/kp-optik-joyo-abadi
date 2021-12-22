@@ -4,16 +4,19 @@
     <item
         android:id="@+id/homescreenFragment"
         android:title="@string/beranda"
+        android:icon="@drawable/ic_home_24p"
         android:enabled="true"/>
 
     <item
         android:id="@+id/cartFragment"
         android:title="@string/keranjang"
+        android:icon="@drawable/ic_cart_24p"
         android:enabled="true"/>
 
     <item
         android:id="@+id/profileFragment"
         android:title="@string/profil_saya"
+        android:icon="@drawable/ic_account_24p"
         android:enabled="true"/>
 
 </menu>

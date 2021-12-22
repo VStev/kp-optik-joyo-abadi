@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
@@ -35,24 +36,28 @@ class MainActivity : AppCompatActivity() {
         if (navController != null) {
             binding.navbarMain.setupWithNavController(navController)
         }
-        if (logged != null){
-            FirebaseMessaging.getInstance().token.addOnSuccessListener {
-                val tokenized = getString(R.string.token_fmt, it)
-                fireDB.collection("Users").document(logged.uid)
+        if (logged != null) {
+            logFCM(logged)
+            if (argument == "new") {
+                val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+            }
+        }
+    }
+
+    private fun logFCM(logged: FirebaseUser) {
+        FirebaseMessaging.getInstance().token.addOnSuccessListener {
+            val tokenized = getString(R.string.token_fmt, it)
+            fireDB.collection("Users").document(logged.uid)
                     .update(
-                        mapOf(
-                            "UID" to logged.uid,
-                            "FCMTOKEN" to tokenized
-                        )
+                            mapOf(
+                                    "UID" to logged.uid,
+                                    "FCMTOKEN" to tokenized
+                            )
                     )
                     .addOnFailureListener {
                         Toast.makeText(baseContext, "Fail to register token", Toast.LENGTH_LONG).show()
                     }
-            }
-            if (argument == "new"){
-                val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-
-            }
         }
     }
 }
+

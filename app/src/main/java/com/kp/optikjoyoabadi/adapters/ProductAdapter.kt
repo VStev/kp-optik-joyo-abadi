@@ -14,6 +14,8 @@ import com.kp.optikjoyoabadi.databinding.ItemProductsBinding
 import com.kp.optikjoyoabadi.model.Product
 import com.kp.optikjoyoabadi.ui.productdetail.ProductDetailActivity
 
+//get paging to work fast
+
 open class ProductAdapter(query: Query, private val reference: StorageReference): FirestoreAdapter<ProductAdapter.CardViewHolder>(query) {
 
     inner class CardViewHolder(private val items: ItemProductsBinding) : RecyclerView.ViewHolder(items.root) {
