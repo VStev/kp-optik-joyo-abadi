@@ -31,6 +31,8 @@ class HomeFragment : Fragment() {
         val user = auth.currentUser
         if (user != null) {
             binding.welcomeText.text = getString(R.string.welcome_text, user.displayName)
+        }else{
+            binding.welcomeText.text = getString(R.string.welcome_text, "Guest")
         }
         setOnClickListeners()
     }

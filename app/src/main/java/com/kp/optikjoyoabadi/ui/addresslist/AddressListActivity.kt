@@ -10,10 +10,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.kp.optikjoyoabadi.R
 import com.kp.optikjoyoabadi.adapters.AddressAdapter
 import com.kp.optikjoyoabadi.databinding.ActivityAddressListBinding
+import com.kp.optikjoyoabadi.model.Address
 
 class AddressListActivity : AppCompatActivity() {
 
@@ -48,6 +50,7 @@ class AddressListActivity : AppCompatActivity() {
             fireDB.collection("Address")
                 .whereArrayContains("consumerId", it.uid)
         }
+        //creates new anonymous object that returns the adapter
         addressAdapter = object : AddressAdapter(query) {
             override fun onDataChanged() {
                 super.onDataChanged()
@@ -64,6 +67,41 @@ class AddressListActivity : AppCompatActivity() {
                 Snackbar.make(binding.root, "Error connecting to database", Snackbar.LENGTH_LONG).show()
             }
         }
+        addressAdapter.setOnItemClickCallback(object:AddressAdapter.OnItemClickCallback{
+            override fun onItemClicked(addressId: String?) {
+//                val notMain = user?.let {
+//                    fireDB.collection("Address")
+//                        .whereArrayContains("consumerId", it.uid)
+//                        .whereEqualTo("isMain", false)
+//                }
+//                val main = user?.let {
+//                    fireDB.collection("Address")
+//                        .whereArrayContains("consumerId", it.uid)
+//                        .whereEqualTo("isMain", false)
+//                }
+                val result = query?.get()
+                if (result != null) {
+                    result.result?.forEach {
+                        val address = it.toObject<Address>()
+                        if (address.addressId != addressId){
+                            fireDB.collection("Address").document(address.addressId)
+                                .update(
+                                    mapOf(
+                                        "isMain" to false
+                                    )
+                                )
+                        }else{
+                            fireDB.collection("Address").document(address.addressId)
+                                .update(
+                                    mapOf(
+                                        "isMain" to true
+                                    )
+                                )
+                        }
+                    }
+                }
+            }
+        })
         with (rv){
             layoutManager = LinearLayoutManager(context)
             adapter = addressAdapter

@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/homescreenFragment"
+        android:id="@+id/homeFragment"
         android:title="@string/beranda"
         android:icon="@drawable/ic_home_24p"
         android:enabled="true"/>
 
     <item
-        android:id="@+id/cartFragment"
+        android:id="@+id/cartFragment2"
         android:title="@string/keranjang"
         android:icon="@drawable/ic_cart_24p"
         android:enabled="true"/>
 
     <item
-        android:id="@+id/profileFragment"
+        android:id="@+id/profileFragment2"
         android:title="@string/profil_saya"
         android:icon="@drawable/ic_account_24p"
         android:enabled="true"/>

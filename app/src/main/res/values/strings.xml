@@ -57,4 +57,10 @@
     <string name="password_lama">Password Lama</string>
     <string name="password_baru">Password Baru</string>
     <string name="konfirmasi_password_baru">Konfirmasi Password Baru</string>
+    <string name="nama_penerima">Nama Penerima</string>
+    <string name="alamat">Alamat</string>
+    <string name="kota">Kota</string>
+    <string name="kabupaten">Kabupaten</string>
+    <string name="kode_pos">Kode Pos</string>
+    <string name="nomor_telpon_penerima">Nomor Telpon Penerima</string>
 </resources>

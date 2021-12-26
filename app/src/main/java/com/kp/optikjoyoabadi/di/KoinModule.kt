@@ -2,6 +2,7 @@ package com.kp.optikjoyoabadi.di
 
 import androidx.room.Room
 import com.kp.optikjoyoabadi.dataobjects.room.CartDB
+import com.kp.optikjoyoabadi.ui.addaddress.AddAddressViewModel
 import com.kp.optikjoyoabadi.ui.cart.CartViewModel
 import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SupportFactory
@@ -28,4 +29,5 @@ val dbModule = module{
 
 val viewModelMod = module{
     viewModel{CartViewModel(get())}
+    viewModel { AddAddressViewModel() }
 }

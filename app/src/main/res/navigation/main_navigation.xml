@@ -70,4 +70,9 @@
         android:name="com.kp.optikjoyoabadi.ui.transactionlist.TransactionListActivity"
         android:label="activity_transaction_list"
         tools:layout="@layout/activity_transaction_list" />
+    <activity
+        android:id="@+id/editProfileActivity"
+        android:name="com.kp.optikjoyoabadi.ui.editprofile.EditProfileActivity"
+        android:label="activity_edit_profile"
+        tools:layout="@layout/activity_edit_profile" />
 </navigation>

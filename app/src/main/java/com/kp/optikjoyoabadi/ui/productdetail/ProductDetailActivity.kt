@@ -55,7 +55,7 @@ class ProductDetailActivity : AppCompatActivity() {
         val query = fireDb.collection("Products").document(productId)
         query.get()
             .addOnSuccessListener {
-                product = it.toObject<Product>()!!
+                product = it.toObject<Product>() as Product
                 if (product != null){
                     val image = product.let { it1 -> reference.child(it1.image_url) }
                     GlideApp.with(binding.root)
