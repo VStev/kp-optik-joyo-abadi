@@ -63,4 +63,6 @@
     <string name="kabupaten">Kabupaten</string>
     <string name="kode_pos">Kode Pos</string>
     <string name="nomor_telpon_penerima">Nomor Telpon Penerima</string>
+    <string name="upload_bukti_pembayaran">Upload bukti pembayaran</string>
+    <string name="pilih_bukti_pembayaran">Pilih bukti pembayaran</string>
 </resources>

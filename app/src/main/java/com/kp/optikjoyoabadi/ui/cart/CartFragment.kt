@@ -41,7 +41,9 @@ class CartFragment : Fragment() {
             if (Cart != null){
                 when (Cart.size){
                     0 -> {
-                        //viewnoitem
+                        binding.recyclerCart.visibility = View.GONE
+                        binding.subtotalCard.visibility = View.GONE
+                        binding.emptyCartLayout.visibility = View.VISIBLE
                     }
                     else ->{
                         cardAdapter.setData(Cart)
@@ -63,6 +65,8 @@ class CartFragment : Fragment() {
     }
 
     private fun setListeners() {
-        TODO("Not yet implemented")
+        binding.buttonCheckout.setOnClickListener {
+            //intent to checkout
+        }
     }
 }

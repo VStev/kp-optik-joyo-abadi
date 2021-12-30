@@ -12,6 +12,7 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.kp.optikjoyoabadi.R
 import com.kp.optikjoyoabadi.databinding.ActivityEditProfileBinding
+import com.kp.optikjoyoabadi.getFirebaseFirestoreInstance
 import com.kp.optikjoyoabadi.model.User
 
 class EditProfileActivity : AppCompatActivity() {
@@ -20,7 +21,7 @@ class EditProfileActivity : AppCompatActivity() {
     private var paramName: String = "view"
     private var paramPwd: String = "view"
     private val auth = Firebase.auth
-    private val fireDB = Firebase.firestore
+    private val fireDB = getFirebaseFirestoreInstance()
     private var name: String? = ""
     private var phoneNumber: String? = ""
 

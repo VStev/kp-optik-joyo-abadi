@@ -15,6 +15,7 @@ class AppOverride: Application() {
             //add modules here
             modules(
                 dbModule,
+                repoModule,
                 viewModelMod
             )
         }

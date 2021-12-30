@@ -40,8 +40,8 @@ class FirebaseInstanceIDService: FirebaseMessagingService() {
     }*/
 
     private fun sendNotification(remoteMessage: RemoteMessage.Notification) {
-        val channelId = "101"
-        val channelName = "Notifikesyen"
+        val channelId = NOTIFICATION_CHANNEL_ID
+        val channelName = NOTIFICATION_CHANNEL_NAME
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(this, 0, intent,

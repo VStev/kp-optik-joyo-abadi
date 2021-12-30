@@ -3,10 +3,11 @@ package com.kp.optikjoyoabadi.ui.addaddress
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.kp.optikjoyoabadi.getFirebaseFirestoreInstance
 import com.kp.optikjoyoabadi.model.Address
 
 class AddAddressViewModel : ViewModel() {
-    private val fireDB = Firebase.firestore
+    private val fireDB = getFirebaseFirestoreInstance()
 
     fun submitData(address: Address) {
         val data = hashMapOf(

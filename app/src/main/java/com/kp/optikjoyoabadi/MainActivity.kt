@@ -17,11 +17,20 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityMainBinding
-    private val fireDB = Firebase.firestore
+    private val fireDB = getFirebaseFirestoreInstance()
     private lateinit var argument: String
 
     companion object {
         const val EXTRA_ARGUMENT = "old"
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.navbarMain.selectedItemId = R.id.homeFragment //experimental basically sets screen to home screen in case someone cancels sign up process
+        val logged = auth.currentUser
+        if (logged != null) {
+            logFCM(logged)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

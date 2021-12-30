@@ -1,8 +1,15 @@
 package com.kp.optikjoyoabadi.ui.paymentdetail
 
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
+import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -11,14 +18,18 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.kp.optikjoyoabadi.R
 import com.kp.optikjoyoabadi.databinding.ActivityPaymentDetailBinding
+import com.kp.optikjoyoabadi.getFirebaseFirestoreInstance
 import com.kp.optikjoyoabadi.model.Payment
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.properties.Delegates
 
 class PaymentDetailActivity : AppCompatActivity() {
 
+    private val fireDB = getFirebaseFirestoreInstance()
+    private val paymentViewModel: PaymentDetailViewModel by viewModel()
     private lateinit var binding: ActivityPaymentDetailBinding
-    private val fireDB = Firebase.firestore
     private lateinit var transactionID: String
+    private lateinit var imageUri: Uri
     private var payAmt by Delegates.notNull<Int>()
 
     companion object {
@@ -38,8 +49,47 @@ class PaymentDetailActivity : AppCompatActivity() {
     }
 
     private fun setOnClickListeners() {
-        TODO("Not yet implemented")
+        binding.buttonUpload.setOnClickListener {
+            when{
+                (imageUri.toString().isEmpty() || imageUri.toString().isBlank()) -> {
+                    Toast.makeText(this, "Bukti bayar belum dipilih, silahkan klik pilih bukti bayar", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+
+                }
+            }
+        }
+
+        binding.buttonPilihGambar.setOnClickListener {
+            val options = arrayOf<CharSequence>("Choose from Gallery", "Cancel")
+            val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+            builder.setTitle("Choose product picture")
+            builder.setItems(options) { dialog, item ->
+                when {
+                    options[item] == "Choose from Gallery" -> {
+                        val pickPhoto =
+                            Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                        resultLauncher.launch(pickPhoto)
+                    }
+                    options[item] == "Cancel" -> {
+                        dialog.dismiss()
+                    }
+                }
+            }
+            builder.show()
+        }
     }
+
+    private val resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK && it.data != null) {
+                val selectedImage: Uri? = it.data!!.data
+                if (selectedImage != null) {
+                    imageUri = selectedImage
+                    binding.buktiBayar.setImageURI(imageUri)
+                }
+            }
+        }
 
     private fun showLayout() {
         //remove the line of code below after done developing
@@ -57,6 +107,8 @@ class PaymentDetailActivity : AppCompatActivity() {
                         binding.invoiceNumber.text = paymentDetail.transactionId
                         binding.paymentDate.text = paymentDetail.receivedAt.toString()
                         binding.totalBayar.text = paymentDetail.amount.toString()
+                        binding.buttonUpload.visibility = View.GONE
+                        binding.buttonPilihGambar.visibility = View.GONE
                         val image = reference.child("Payment/${paymentDetail.proof}")
                         Glide.with(binding.root)
                             .load(image)

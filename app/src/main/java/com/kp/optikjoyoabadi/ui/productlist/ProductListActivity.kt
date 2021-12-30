@@ -15,13 +15,14 @@ import com.google.firebase.storage.ktx.storage
 import com.kp.optikjoyoabadi.R
 import com.kp.optikjoyoabadi.adapters.ProductAdapter
 import com.kp.optikjoyoabadi.databinding.ActivityProductListBinding
+import com.kp.optikjoyoabadi.getFirebaseFirestoreInstance
 
 //use setQuery from FirestoreAdapter to handle filters
 
 class ProductListActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityProductListBinding
-    private val fireDb = Firebase.firestore
+    private val fireDb = getFirebaseFirestoreInstance()
     private lateinit var productAdapter: ProductAdapter
     private lateinit var argument: String
 
@@ -53,7 +54,7 @@ class ProductListActivity : AppCompatActivity() {
         //remove the line of code above after done developing
         val rv: RecyclerView = findViewById(R.id.recycler_product)
         val query = fireDb.collection("Products")
-            .whereEqualTo("Category", argument)
+            .whereEqualTo("category", argument)
         val reference = Firebase.storage.reference
         productAdapter = object : ProductAdapter(query, reference) {
             override fun onDataChanged() {

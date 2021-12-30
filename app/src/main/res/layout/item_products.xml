@@ -18,6 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/product_picture_thumb"
             app:layout_constraintStart_toStartOf="@+id/product_picture_thumb"
             app:layout_constraintTop_toBottomOf="@+id/product_picture_thumb"
             tools:text="Product Name" />
@@ -29,6 +30,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/product_picture_thumb"
             app:layout_constraintStart_toStartOf="@+id/product_picture_thumb"
             app:layout_constraintTop_toBottomOf="@+id/txt_product_price"
             tools:text="Category" />
@@ -38,6 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/product_picture_thumb"
             app:layout_constraintStart_toStartOf="@+id/product_picture_thumb"
             app:layout_constraintTop_toBottomOf="@+id/txt_product_name"
             tools:text="Price" />
@@ -46,9 +49,6 @@
             android:id="@+id/product_picture_thumb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
             android:contentDescription="@string/image_desc_thumbnail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

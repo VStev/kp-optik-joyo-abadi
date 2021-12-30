@@ -14,11 +14,12 @@ import com.google.firebase.ktx.Firebase
 import com.kp.optikjoyoabadi.R
 import com.kp.optikjoyoabadi.adapters.TransactionAdapter
 import com.kp.optikjoyoabadi.databinding.ActivityTransactionListBinding
+import com.kp.optikjoyoabadi.getFirebaseFirestoreInstance
 
 class TransactionListActivity : AppCompatActivity() {
 
     private lateinit var transactionAdapter: TransactionAdapter
-    private val fireDB = Firebase.firestore
+    private val fireDB = getFirebaseFirestoreInstance()
     private val auth = Firebase.auth
     private lateinit var binding: ActivityTransactionListBinding
 

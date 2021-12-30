@@ -17,13 +17,14 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.kp.optikjoyoabadi.adapters.TransactionDetailAdapter
 import com.kp.optikjoyoabadi.databinding.ActivityTransactionDetailBinding
+import com.kp.optikjoyoabadi.getFirebaseFirestoreInstance
 import com.kp.optikjoyoabadi.model.Transaction
 import com.kp.optikjoyoabadi.ui.paymentdetail.PaymentDetailActivity
 
 class TransactionDetailActivity : AppCompatActivity() {
     private lateinit var detailAdapter: TransactionDetailAdapter
     private var _binding: ActivityTransactionDetailBinding? = null
-    private val fireDB = Firebase.firestore
+    private val fireDB = getFirebaseFirestoreInstance()
     private lateinit var transactionId: String
     private val binding get() = _binding!!
 

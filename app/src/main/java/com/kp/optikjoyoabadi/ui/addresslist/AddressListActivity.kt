@@ -15,6 +15,7 @@ import com.google.firebase.ktx.Firebase
 import com.kp.optikjoyoabadi.R
 import com.kp.optikjoyoabadi.adapters.AddressAdapter
 import com.kp.optikjoyoabadi.databinding.ActivityAddressListBinding
+import com.kp.optikjoyoabadi.getFirebaseFirestoreInstance
 import com.kp.optikjoyoabadi.model.Address
 
 class AddressListActivity : AppCompatActivity() {
@@ -22,7 +23,7 @@ class AddressListActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var addressAdapter: AddressAdapter
     private lateinit var binding: ActivityAddressListBinding
-    private val fireDB = Firebase.firestore
+    private val fireDB = getFirebaseFirestoreInstance()
 
     override fun onStart() {
         super.onStart()

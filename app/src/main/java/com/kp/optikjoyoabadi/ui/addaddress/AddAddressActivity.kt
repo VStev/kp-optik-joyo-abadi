@@ -7,6 +7,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.kp.optikjoyoabadi.databinding.ActivityAddAddressBinding
+import com.kp.optikjoyoabadi.getFirebaseFirestoreInstance
 import com.kp.optikjoyoabadi.model.Address
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.random.Random
@@ -16,7 +17,7 @@ class AddAddressActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddAddressBinding
     private lateinit var parameter: String
     private lateinit var editAddressId: String
-    private val fireDB = Firebase.firestore
+    private val fireDB = getFirebaseFirestoreInstance()
     private val auth = Firebase.auth.currentUser
     private val addViewModel: AddAddressViewModel by viewModel()
 

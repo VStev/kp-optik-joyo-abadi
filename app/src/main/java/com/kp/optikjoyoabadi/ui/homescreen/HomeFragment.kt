@@ -40,19 +40,19 @@ class HomeFragment : Fragment() {
     private fun setOnClickListeners() {
         binding.cardKacamata.setOnClickListener {
             val intent = Intent(context, ProductListActivity::class.java)
-            intent.putExtra(ProductListActivity.EXTRA_ARGUMENT, "kacamata")
+            intent.putExtra(ProductListActivity.EXTRA_ARGUMENT, "Kacamata")
             startActivity(intent)
         }
 
         binding.cardSunglasses.setOnClickListener {
             val intent = Intent(context, ProductListActivity::class.java)
-            intent.putExtra(ProductListActivity.EXTRA_ARGUMENT, "sunglasses")
+            intent.putExtra(ProductListActivity.EXTRA_ARGUMENT, "Sunglasses")
             startActivity(intent)
         }
 
         binding.cardAksesoris.setOnClickListener {
             val intent = Intent(context, ProductListActivity::class.java)
-            intent.putExtra(ProductListActivity.EXTRA_ARGUMENT, "aksesoris")
+            intent.putExtra(ProductListActivity.EXTRA_ARGUMENT, "Softlens")
             startActivity(intent)
         }
     }

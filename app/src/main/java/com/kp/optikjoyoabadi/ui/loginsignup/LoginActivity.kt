@@ -67,6 +67,8 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.buttonSignup.setOnClickListener {
+            binding.inputLoginId.setText("")
+            binding.inputPassword.setText("")
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
