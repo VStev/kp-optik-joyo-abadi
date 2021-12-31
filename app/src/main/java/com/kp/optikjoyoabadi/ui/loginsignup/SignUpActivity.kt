@@ -30,6 +30,12 @@ class SignUpActivity : AppCompatActivity() {
         setListeners()
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
     private fun updateUI(user: FirebaseUser, name: String) {
         FirebaseMessaging.getInstance().token
             .addOnSuccessListener {

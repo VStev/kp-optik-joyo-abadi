@@ -15,36 +15,47 @@
         android:theme="@style/Theme.OptikJoyoAbadi">
         <activity
             android:name=".ui.editprofile.EditProfileActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.transactionlist.TransactionListActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.addresslist.AddressListActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.addaddress.AddAddressActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.checkout.CheckoutActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.paymentdetail.PaymentDetailActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.productlist.ProductListActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.productdetail.ProductDetailActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.transactiondetail.TransactionDetailActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.loginsignup.SignUpActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,6 +65,7 @@
         </activity>
         <activity
             android:name=".ui.loginsignup.LoginActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
     </application>
 

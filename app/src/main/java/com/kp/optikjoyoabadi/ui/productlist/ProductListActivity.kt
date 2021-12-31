@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -25,6 +26,8 @@ class ProductListActivity : AppCompatActivity() {
     private val fireDb = getFirebaseFirestoreInstance()
     private lateinit var productAdapter: ProductAdapter
     private lateinit var argument: String
+    private var remaining = 0
+    private val pageSize = 8
 
     companion object {
         const val EXTRA_ARGUMENT = "kacamata"
@@ -49,12 +52,23 @@ class ProductListActivity : AppCompatActivity() {
     }
 
     private fun showLayout() {
+        remaining = 0
         //remove the line of code below after done developing
         FirebaseFirestore.setLoggingEnabled(true)
         //remove the line of code above after done developing
         val rv: RecyclerView = findViewById(R.id.recycler_product)
-        val query = fireDb.collection("Products")
+        val totalQuery =
+            fireDb.collection("Products")
             .whereEqualTo("category", argument)
+        totalQuery.get()
+            .addOnSuccessListener {
+                remaining = it.size()
+            }
+        val query =
+            fireDb.collection("Products")
+            .whereEqualTo("category", argument)
+//            .orderBy("productName", Query.Direction.ASCENDING)
+            .limit(8)
         val reference = Firebase.storage.reference
         productAdapter = object : ProductAdapter(query, reference) {
             override fun onDataChanged() {
@@ -75,6 +89,23 @@ class ProductListActivity : AppCompatActivity() {
         with (rv){
             layoutManager = GridLayoutManager(context, 2)
             adapter = productAdapter
+            addOnScrollListener(object: RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (!rv.canScrollVertically(1)){
+                        remaining -= pageSize
+//                        val after = 7 * page
+//                        val next = fireDb.collection("Products")
+//                            .whereEqualTo("category", argument)
+//                            .orderBy("productName", Query.Direction.ASCENDING)
+//                            .startAfter(after)
+//                            .limit(8)
+                        if (remaining > 0){
+                            productAdapter.updateQuery(argument)
+                        }
+                    }
+                }
+            })
         }
     }
 }

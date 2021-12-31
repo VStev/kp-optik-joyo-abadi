@@ -1,9 +1,9 @@
 package com.kp.optikjoyoabadi.ui.productdetail
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -12,7 +12,7 @@ import com.kp.optikjoyoabadi.R
 import com.kp.optikjoyoabadi.databinding.ActivityProductDetailBinding
 import com.kp.optikjoyoabadi.getFirebaseFirestoreInstance
 import com.kp.optikjoyoabadi.model.Product
-import com.kp.optikjoyoabadi.ui.cart.CartViewModel
+import com.kp.optikjoyoabadi.ui.loginsignup.LoginActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProductDetailActivity : AppCompatActivity() {
@@ -23,7 +23,7 @@ class ProductDetailActivity : AppCompatActivity() {
     private val reference = Firebase.storage.reference
     private lateinit var productId: String
     private lateinit var product: Product
-    private val productviewModel: ProductDetailViewModel by viewModel()
+    private val productViewModel: ProductDetailViewModel by viewModel()
 
     companion object {
         const val EXTRA_ID = "id"
@@ -43,11 +43,14 @@ class ProductDetailActivity : AppCompatActivity() {
             val user = auth.currentUser
             if (user != null) {
                 if (user.isEmailVerified){
-                    //popup add note and qty
-                    productviewModel.addtoCart(product)
+                    //TODO(popup add note and qty)
+                    productViewModel.addtoCart(product)
                 }else{
-                    //alertdialog
+                    //TODO(alertdialog)
                 }
+            }else{
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
             }
         }
     }
@@ -56,22 +59,20 @@ class ProductDetailActivity : AppCompatActivity() {
         val query = fireDb.collection("Products").document(productId)
         query.get()
             .addOnSuccessListener {
-                product = it.toObject<Product>() as Product
-                if (product != null){
-                    val image = product.let { it1 -> reference.child("products/${it1.image_url}") }
-                    GlideApp.with(binding.root)
-                        .load(image)
-                        .into(binding.productImage)
-                    binding.txtProductName.text = product.productName
-                    binding.txtStock.text = if (product.stock > 0){
-                        getString(R.string.stok_tersedia)
-                    }else{
-                        getString(R.string.stok_habis)
-                    }
-                    binding.txtCategory.text = product.category
-                    binding.txtPrice.text = product.price.toString()
-                    binding.txtProductDetail.text = product.details
+                product = it.toObject<Product>()!!
+                val image = product.let { it1 -> reference.child("products/${it1.image_url}") }
+                GlideApp.with(binding.root)
+                    .load(image)
+                    .into(binding.productImage)
+                binding.txtProductName.text = product.productName
+                binding.txtStock.text = if (product.stock > 0){
+                    getString(R.string.stok_tersedia)
+                }else{
+                    getString(R.string.stok_habis)
                 }
+                binding.txtCategory.text = product.category
+                binding.txtPrice.text = product.price.toString()
+                binding.txtProductDetail.text = product.details
             }
     }
 }

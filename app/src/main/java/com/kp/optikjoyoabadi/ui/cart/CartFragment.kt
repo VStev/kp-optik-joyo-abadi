@@ -20,6 +20,8 @@ class CartFragment : Fragment() {
     private val cartViewModel: CartViewModel by viewModel()
     private lateinit var rv: RecyclerView
 
+    //TODO:(Implement swipe delete/at least button delete, checkout button listener)
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

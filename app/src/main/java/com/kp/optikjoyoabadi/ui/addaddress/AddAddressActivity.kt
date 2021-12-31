@@ -155,6 +155,7 @@ class AddAddressActivity : AppCompatActivity() {
                 query.get()
                     .addOnCompleteListener {
                         if (it.isSuccessful){
+                            //TODO(match region info with array)
                             val address = it.result?.toObject<Address>()
                             binding.addRecipientName.setText(address?.recipientName)
                             binding.addAddressStreet.setText(address?.street)

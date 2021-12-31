@@ -11,6 +11,7 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.storage.StorageReference
 import com.kp.optikjoyoabadi.GlideApp
 import com.kp.optikjoyoabadi.databinding.ItemProductsBinding
+import com.kp.optikjoyoabadi.getFirebaseFirestoreInstance
 import com.kp.optikjoyoabadi.model.Product
 import com.kp.optikjoyoabadi.ui.productdetail.ProductDetailActivity
 
@@ -36,6 +37,16 @@ open class ProductAdapter(query: Query, private val reference: StorageReference)
                 items.root.context.startActivity(intent)
            }
         }
+    }
+
+    fun updateQuery(argument: String){
+        val lastVisible = getSnapshot(itemCount-1)
+        val query = getFirebaseFirestoreInstance().collection("Products")
+                            .whereEqualTo("category", argument)
+//                            .orderBy("productName", Query.Direction.ASCENDING)
+                            .startAfter(lastVisible)
+                            .limit(8)
+        this.setQuery(query)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {

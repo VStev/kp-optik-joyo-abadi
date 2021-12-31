@@ -30,6 +30,12 @@ class LoginActivity : AppCompatActivity() {
         setListeners()
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
     private fun updateUI(user: FirebaseUser?){
         if (user != null) {
             var account: String
