@@ -67,4 +67,7 @@
     <string name="pilih_bukti_pembayaran">Pilih bukti pembayaran</string>
     <string name="alamat_pengiriman">Alamat Pengiriman</string>
     <string name="bayar">bayar</string>
+    <string name="nanti_saja">Nanti saja</string>
+    <string name="tambah_alamat_sekarang">Tambah Alamat Sekarang</string>
+    <string name="kamu_belum_memiliki_alamat_pengiriman_nih_mari_tambahkan_satu_terlebih_dahulu_sebelum_melanjutkan">Kamu belum memiliki alamat pengiriman nih. Mari tambahkan satu terlebih dahulu sebelum melanjutkan.</string>
 </resources>

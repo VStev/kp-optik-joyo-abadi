@@ -1,5 +1,6 @@
 package com.kp.optikjoyoabadi.ui.cart
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,8 @@ import com.kp.optikjoyoabadi.R
 import com.kp.optikjoyoabadi.adapters.CartAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.kp.optikjoyoabadi.databinding.FragmentCartBinding
+import com.kp.optikjoyoabadi.model.Cart
+import com.kp.optikjoyoabadi.ui.checkout.CheckoutActivity
 
 class CartFragment : Fragment() {
 
@@ -19,8 +22,6 @@ class CartFragment : Fragment() {
     private lateinit var cardAdapter: CartAdapter
     private val cartViewModel: CartViewModel by viewModel()
     private lateinit var rv: RecyclerView
-
-    //TODO:(Implement swipe delete/at least button delete, checkout button listener)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,6 +59,14 @@ class CartFragment : Fragment() {
                         setListeners()
                     }
                 }
+                cardAdapter.setOnItemClickCallback(object: CartAdapter.OnItemClickCallback{
+                    override fun onItemClicked(product: Cart?, position: Int) {
+                        if (product != null) {
+                            cartViewModel.delete(product)
+                        }
+                        cardAdapter.notifyItemRemoved(position)
+                    }
+                })
                 with(rv){
                     layoutManager = LinearLayoutManager(context)
                     adapter = cardAdapter
@@ -68,7 +77,8 @@ class CartFragment : Fragment() {
 
     private fun setListeners() {
         binding.buttonCheckout.setOnClickListener {
-            //intent to checkout
+            val intent = Intent(context, CheckoutActivity::class.java)
+            startActivity(intent)
         }
     }
 }

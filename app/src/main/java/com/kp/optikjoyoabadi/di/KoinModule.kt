@@ -5,6 +5,7 @@ import com.kp.optikjoyoabadi.dataobjects.room.CartDB
 import com.kp.optikjoyoabadi.dataobjects.room.CartRepository
 import com.kp.optikjoyoabadi.ui.addaddress.AddAddressViewModel
 import com.kp.optikjoyoabadi.ui.cart.CartViewModel
+import com.kp.optikjoyoabadi.ui.checkout.CheckoutViewModel
 import com.kp.optikjoyoabadi.ui.paymentdetail.PaymentDetailViewModel
 import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SupportFactory
@@ -37,4 +38,5 @@ val viewModelMod = module{
     viewModel{ CartViewModel(get()) }
     viewModel { AddAddressViewModel() }
     viewModel { PaymentDetailViewModel() }
+    viewModel { CheckoutViewModel(get()) }
 }

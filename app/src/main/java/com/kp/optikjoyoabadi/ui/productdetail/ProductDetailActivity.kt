@@ -44,9 +44,9 @@ class ProductDetailActivity : AppCompatActivity() {
             if (user != null) {
                 if (user.isEmailVerified){
                     //TODO(popup add note and qty)
-                    productViewModel.addtoCart(product)
+                    productViewModel.addToCart(product, "a", 1)
                 }else{
-                    //TODO(alertdialog)
+                    //TODO(alertdialog not yet verified)
                 }
             }else{
                 val intent = Intent(this, LoginActivity::class.java)

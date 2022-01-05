@@ -1,17 +1,16 @@
 package com.kp.optikjoyoabadi.ui.transactiondetail
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -53,7 +52,7 @@ class TransactionDetailActivity : AppCompatActivity() {
     }
 
     private fun setOnClickListeners() {
-        val reference = fireDB.collection("Transaction").document(transactionId)
+        val reference = fireDB.collection("Transactions").document(transactionId)
 
         binding.buttonCancelOrder.setOnClickListener {
             reference
@@ -81,7 +80,7 @@ class TransactionDetailActivity : AppCompatActivity() {
         FirebaseFirestore.setLoggingEnabled(true)
         //remove the line of code above after done developing
         val rv: RecyclerView = binding.recyclerTransactionItem
-        val query = fireDB.collection("Transaction").document(transactionId)
+        val query = fireDB.collection("Transactions").document(transactionId)
         val rvQuery = fireDB.collection("TransactionDetail")
             .whereEqualTo("transactionId", transactionId)
         val reference = Firebase.storage.reference

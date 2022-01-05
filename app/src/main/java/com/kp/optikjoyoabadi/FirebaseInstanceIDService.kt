@@ -11,6 +11,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.kp.optikjoyoabadi.ui.transactionlist.TransactionListActivity
 
 class FirebaseInstanceIDService: FirebaseMessagingService() {
     companion object {
@@ -42,7 +43,7 @@ class FirebaseInstanceIDService: FirebaseMessagingService() {
     private fun sendNotification(remoteMessage: RemoteMessage.Notification) {
         val channelId = NOTIFICATION_CHANNEL_ID
         val channelName = NOTIFICATION_CHANNEL_NAME
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, TransactionListActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(this, 0, intent,
             PendingIntent.FLAG_ONE_SHOT)

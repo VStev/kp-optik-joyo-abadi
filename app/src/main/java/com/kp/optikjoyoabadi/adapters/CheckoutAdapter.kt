@@ -13,11 +13,11 @@ import com.kp.optikjoyoabadi.databinding.ItemCartBinding
 import com.kp.optikjoyoabadi.model.Cart
 import com.kp.optikjoyoabadi.ui.productdetail.ProductDetailActivity
 
-class CartAdapter: RecyclerView.Adapter<CartAdapter.CardViewHolder>() {
+class CheckoutAdapter: RecyclerView.Adapter<CheckoutAdapter.CardViewHolder>() {
 
     private val mData = ArrayList<Cart>()
     private val reference = Firebase.storage.reference
-    private lateinit var onItemClickCallback: OnItemClickCallback
+    private lateinit var onItemClickCallback: CartAdapter.OnItemClickCallback
 
     fun setData(items: List<Cart>) {
         mData.clear()
@@ -36,14 +36,6 @@ class CartAdapter: RecyclerView.Adapter<CartAdapter.CardViewHolder>() {
             binding.txtNote.text = cartItem.note
             binding.txtPrice.text = cartItem.price.toString()
             binding.txtQuantity.text = cartItem.quantity.toString()
-            itemView.setOnClickListener {
-                val intent = Intent(itemView.context, ProductDetailActivity::class.java)
-                intent.putExtra(ProductDetailActivity.EXTRA_ID, cartItem.productId)
-                itemView.context.startActivity(intent)
-            }
-            binding.buttonDelete.setOnClickListener {
-                onItemClickCallback.onItemClicked(cartItem, adapterPosition)
-            }
         }
     }
 
@@ -58,12 +50,4 @@ class CartAdapter: RecyclerView.Adapter<CartAdapter.CardViewHolder>() {
     }
 
     override fun getItemCount(): Int = mData.size
-
-    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback){
-        this.onItemClickCallback = onItemClickCallback
-    }
-
-    interface OnItemClickCallback {
-        fun onItemClicked(product: Cart?, position: Int)
-    }
 }
