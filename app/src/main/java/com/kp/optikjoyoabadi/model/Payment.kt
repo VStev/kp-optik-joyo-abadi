@@ -6,6 +6,6 @@ data class Payment(
     val paymentId: String = "",
     val transactionId: String = "",
     val amount: Int = 0,
-    val proof: String = "",
+    val proof: String? = "",
     val receivedAt: Timestamp = Timestamp.now()
 )

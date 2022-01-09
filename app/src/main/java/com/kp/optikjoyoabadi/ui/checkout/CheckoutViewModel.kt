@@ -42,6 +42,14 @@ class CheckoutViewModel(private val repository: CartRepository): ViewModel() {
         fireDB.collection("Transactions").document(transactionId)
             .set(transactionData)
             .addOnSuccessListener {
+                val paymentId = "PAY/$transactionId"
+                val paymentData = hashMapOf(
+                    "paymentId" to paymentId,
+                    "transactionId" to transactionId,
+                    "amount" to subTotal+shipping
+                )
+                fireDB.collection("Payment").document(paymentId)
+                    .set(paymentData)
                 itemList.forEach {
                     val transactionDetailData = hashMapOf(
                         "transactionId" to transactionId,
@@ -60,6 +68,7 @@ class CheckoutViewModel(private val repository: CartRepository): ViewModel() {
                         .set(transactionDetailData)
                     currentItem += 1
                 }
+                repository.nukeCart()
             }
             .addOnFailureListener {
 

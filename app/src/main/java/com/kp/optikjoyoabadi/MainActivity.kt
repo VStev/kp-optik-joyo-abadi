@@ -1,6 +1,9 @@
 package com.kp.optikjoyoabadi
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +15,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.kp.optikjoyoabadi.databinding.ActivityMainBinding
+import com.kp.optikjoyoabadi.ui.addaddress.AddAddressActivity
+import com.kp.optikjoyoabadi.ui.addresslist.AddressListActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -49,6 +54,19 @@ class MainActivity : AppCompatActivity() {
             logFCM(logged)
             if (argument == "new") {
                 val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+                builder.setView(R.layout.welcome_alert_dialog_box)
+                val buttonOk = findViewById<Button>(R.id.button_tambah_alamat)
+                val buttonLater = findViewById<TextView>(R.id.button_text_later)
+                val dialog = builder.create()
+                buttonOk.setOnClickListener {
+                    dialog.dismiss()
+                    val intent = Intent(this, AddAddressActivity::class.java)
+                    intent.putExtra(AddAddressActivity.EXTRA_PARAM, "first")
+                    startActivity(intent)
+                }
+                buttonLater.setOnClickListener {
+                    dialog.dismiss()
+                }
             }
         }
     }

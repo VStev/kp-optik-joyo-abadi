@@ -1,6 +1,10 @@
 package com.kp.optikjoyoabadi.ui.addresslist
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,12 +19,15 @@ import com.kp.optikjoyoabadi.adapters.AddressAdapter
 import com.kp.optikjoyoabadi.databinding.ActivityAddressListBinding
 import com.kp.optikjoyoabadi.getFirebaseFirestoreInstance
 import com.kp.optikjoyoabadi.model.Address
+import com.kp.optikjoyoabadi.ui.addaddress.AddAddressActivity
+import kotlin.properties.Delegates
 
 class AddressListActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var addressAdapter: AddressAdapter
     private lateinit var binding: ActivityAddressListBinding
+    private var flag by Delegates.notNull<Boolean>()
     private val fireDB = getFirebaseFirestoreInstance()
 
     override fun onStart() {
@@ -54,6 +61,7 @@ class AddressListActivity : AppCompatActivity() {
             override fun onDataChanged() {
                 super.onDataChanged()
                 if (itemCount == 0){
+                    flag = true
                     binding.recyclerAddress.visibility = View.GONE
 //                    binding.noItemLayout.visibility = View.VISIBLE
                 }else{
@@ -106,4 +114,24 @@ class AddressListActivity : AppCompatActivity() {
             adapter = addressAdapter
         }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_address_list, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.add_address){
+            val intent = Intent(this, AddAddressActivity::class.java)
+            if (flag){
+                intent.putExtra(AddAddressActivity.EXTRA_PARAM, "first")
+            }else{
+                intent.putExtra(AddAddressActivity.EXTRA_PARAM, "new")
+            }
+            startActivity(intent)
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 }
