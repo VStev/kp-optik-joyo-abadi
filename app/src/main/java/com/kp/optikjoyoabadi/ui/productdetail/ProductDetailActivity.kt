@@ -2,6 +2,7 @@ package com.kp.optikjoyoabadi.ui.productdetail
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.toObject
@@ -42,13 +43,23 @@ class ProductDetailActivity : AppCompatActivity() {
         binding.buttonAtc.setOnClickListener {
             val user = auth.currentUser
             if (user != null) {
-                if (user.isEmailVerified){
-                    //TODO(popup add note and qty)
+                if (user.isEmailVerified) {
+                    val builder = AlertDialog.Builder(this)
+                    builder.setView(R.layout.set_qty_note_alert_dialog_box)
                     productViewModel.addToCart(product, "a", 1)
-                }else{
-                    //TODO(alertdialog not yet verified)
+                } else {
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle("Anda Belum Terverifikasi")
+                    builder.setMessage("Mohon cek email anda untuk link verifikasi. Klik tombol verifikasi di bawah untuk mengirimkan email verifikasi ulang.")
+                    builder.setPositiveButton("Kirim Ulang") { dialog, _ ->
+                        user.sendEmailVerification()
+                        dialog.dismiss()
+                    }
+                    builder.setNegativeButton("Tutup"){dialog, _ ->
+                        dialog.dismiss()
+                    }
                 }
-            }else{
+            } else {
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
             }
@@ -65,14 +76,17 @@ class ProductDetailActivity : AppCompatActivity() {
                     .load(image)
                     .into(binding.productImage)
                 binding.txtProductName.text = product.productName
-                binding.txtStock.text = if (product.stock > 0){
-                    getString(R.string.stok_tersedia)
-                }else{
-                    getString(R.string.stok_habis)
+                if (product.stock > 0) {
+                    binding.txtStock.text = getString(R.string.stok_tersedia)
+                } else {
+                    binding.txtStock.text = getString(R.string.stok_habis)
+                    binding.buttonAtc.isEnabled = false
                 }
                 binding.txtCategory.text = product.category
                 binding.txtPrice.text = product.price.toString()
                 binding.txtProductDetail.text = product.details
             }
     }
+
+
 }

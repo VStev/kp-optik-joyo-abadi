@@ -71,4 +71,6 @@
     <string name="tambah_alamat_sekarang">Tambah Alamat Sekarang</string>
     <string name="kamu_belum_memiliki_alamat_pengiriman_nih_mari_tambahkan_satu_terlebih_dahulu_sebelum_melanjutkan">Kamu belum memiliki alamat pengiriman nih. Mari tambahkan satu terlebih dahulu sebelum melanjutkan.</string>
     <string name="tambah_alamat">Tambah Alamat</string>
+    <string name="tampilkan_semua">Tampilkan semua</string>
+    <string name="pilih_alamat">Pilih Alamat</string>
 </resources>

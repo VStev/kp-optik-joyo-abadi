@@ -21,9 +21,7 @@ class EditProfileActivity : AppCompatActivity() {
     private var paramName: String = "view"
     private var paramPwd: String = "view"
     private val auth = Firebase.auth
-    private val fireDB = getFirebaseFirestoreInstance()
     private var name: String? = ""
-    private var phoneNumber: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,29 +37,18 @@ class EditProfileActivity : AppCompatActivity() {
                 "view" -> {
                     paramName = "edit"
                     binding.inputDisplayname.isEnabled = true
-                    binding.inputTelephone.isEnabled = true
                     binding.buttonCancelEdit.visibility = View.VISIBLE
                     binding.buttonSaveEdit.setText(R.string.simpan)
                 }
                 "edit" -> {
                     paramName = "view"
                     name = binding.inputDisplayname.text.toString()
-                    phoneNumber = binding.inputTelephone.text.toString()
                     val user = auth.currentUser
                     val request = userProfileChangeRequest{
                         displayName = name
                     }
                     user?.updateProfile(request)
-                    if (user != null) {
-                        fireDB.collection("Users").document(user.uid)
-                                .update(
-                                        mapOf(
-                                                "phoneNumber" to phoneNumber
-                                        )
-                                )
-                    }
                     binding.inputDisplayname.isEnabled = false
-                    binding.inputTelephone.isEnabled = false
                     binding.buttonSaveEdit.setText(R.string.ubah)
                 }
             }
@@ -69,9 +56,7 @@ class EditProfileActivity : AppCompatActivity() {
 
         binding.buttonCancelEdit.setOnClickListener {
             binding.inputDisplayname.isEnabled = false
-            binding.inputTelephone.isEnabled = false
             binding.inputDisplayname.setText(name)
-            binding.inputTelephone.setText(phoneNumber)
             binding.buttonCancelEdit.visibility = View.GONE
             binding.buttonSaveEdit.setText(R.string.ubah)
         }
@@ -131,18 +116,11 @@ class EditProfileActivity : AppCompatActivity() {
 
     private fun showLayout() {
         binding.inputDisplayname.isEnabled = false
-        binding.inputTelephone.isEnabled = false
         binding.inputOldPassword.isEnabled = false
         binding.inputNewPasswordA.isEnabled = false
         binding.inputNewPasswordB.isEnabled = false
         val user = auth.currentUser
-        val query = user?.let { fireDB.collection("Users").document(it.uid) }
         name = user?.displayName
         binding.inputDisplayname.setText(name)
-        query?.get()?.addOnSuccessListener {
-            val userObject = it.toObject<User>()
-            phoneNumber = userObject?.phoneNumber
-            binding.inputTelephone.setText(phoneNumber)
-        }
     }
 }

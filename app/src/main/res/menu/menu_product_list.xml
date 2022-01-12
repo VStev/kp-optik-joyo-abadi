@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/glasses_only"
+        android:title="@string/kacamata"
+        android:enabled="true"/>
+
+    <item
+        android:id="@+id/sunglasses_only"
+        android:title="@string/sunglasses"
+        android:enabled="true"/>
+
+    <item
+        android:id="@+id/all_items"
+        android:title="@string/tampilkan_semua"
+        android:enabled="true"/>
+
+</menu>

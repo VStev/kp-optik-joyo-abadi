@@ -11,12 +11,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.kp.optikjoyoabadi.databinding.ActivityMainBinding
 import com.kp.optikjoyoabadi.ui.addaddress.AddAddressActivity
-import com.kp.optikjoyoabadi.ui.addresslist.AddressListActivity
 
 class MainActivity : AppCompatActivity() {
 

@@ -2,9 +2,15 @@ package com.kp.optikjoyoabadi.ui.checkout
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import com.kp.optikjoyoabadi.R
+import com.kp.optikjoyoabadi.adapters.CartAdapter
+import com.kp.optikjoyoabadi.adapters.ChangeAddressAdapter
 import com.kp.optikjoyoabadi.adapters.CheckoutAdapter
 import com.kp.optikjoyoabadi.databinding.ActivityCheckoutBinding
 import com.kp.optikjoyoabadi.getFirebaseFirestoreInstance
@@ -26,8 +32,6 @@ class CheckoutActivity : AppCompatActivity() {
     private val auth = Firebase.auth.currentUser
     private val checkoutViewModel: CheckoutViewModel by viewModel()
 
-    //TODO(check address, change address, insert to firestore transaction+transactiondetail)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCheckoutBinding.inflate(layoutInflater)
@@ -44,7 +48,22 @@ class CheckoutActivity : AppCompatActivity() {
         }
 
         binding.ubahAlamatKirim.setOnClickListener {
-
+            val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+            builder.setView(R.layout.change_address_alert_dialog_box)
+            val recycler = findViewById<RecyclerView>(R.id.rv_change_address)
+            val rvAdapter = ChangeAddressAdapter()
+            rvAdapter.setData(addressList)
+            rvAdapter.setOnItemClickCallback(object: ChangeAddressAdapter.OnItemClickCallback{
+                override fun onItemClicked(position: Int) {
+                    address = addressList[position]
+                    displayAddress(address)
+                    updateShippingFeeAndTotal(subTotal, address.city, address.region)
+                }
+            })
+            with(recycler){
+                adapter = rvAdapter
+                layoutManager = LinearLayoutManager(context)
+            }
         }
     }
 
@@ -78,6 +97,16 @@ class CheckoutActivity : AppCompatActivity() {
             binding.txtSubtotal.text = subText
         })
         updateShippingFeeAndTotal(subTotal, address.city, address.region)
+        displayAddress(address)
+    }
+
+    private fun displayAddress(address: Address) {
+        val reg = "${address.city}, ${address.region}"
+        binding.namaPenerima.text = address.recipientName
+        binding.nomorTeleponPenerima.text = address.phoneNumber
+        binding.alamatPenerima.text = address.street
+        binding.regionPenerima.text = reg
+        binding.postalCodePenerima.text = address.postalCode.toString()
     }
 
     private fun updateShippingFeeAndTotal(subTotal: Int, city: String, region: String) {

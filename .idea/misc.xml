@@ -28,7 +28,7 @@
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/activity_splash_screen.xml" value="0.16084093211752787" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/activity_transaction_detail.xml" value="0.5" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/activity_transaction_list.xml" value="0.3307291666666667" />
-        <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/change_address_alert_dialog_box.xml" value="0.1" />
+        <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/change_address_alert_dialog_box.xml" value="0.25" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/fragment_address_list.xml" value="0.2898550724637681" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/fragment_cart.xml" value="0.33" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/fragment_fullscreen.xml" value="0.32563405797101447" />
@@ -39,6 +39,7 @@
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/fragment_transaction_list.xml" value="0.33" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/item_address.xml" value="0.5" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/item_cart.xml" value="0.5" />
+        <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/item_change_address.xml" value="0.26811594202898553" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/item_products.xml" value="0.5" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/item_transaction_details.xml" value="0.34193840579710144" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/item_transactions.xml" value="0.34193840579710144" />
@@ -49,6 +50,7 @@
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/welcome_alertbox.xml" value="0.3365036231884058" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/menu/menu_address_list.xml" value="0.34479166666666666" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/menu/menu_navbar_main.xml" value="0.34479166666666666" />
+        <entry key="..\:/OptikJoyoAbadi/app/src/main/res/menu/menu_product_list.xml" value="0.34479166666666666" />
       </map>
     </option>
   </component>

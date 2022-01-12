@@ -2,15 +2,14 @@ package com.kp.optikjoyoabadi.ui.productlist
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.kp.optikjoyoabadi.R
@@ -57,18 +56,32 @@ class ProductListActivity : AppCompatActivity() {
         FirebaseFirestore.setLoggingEnabled(true)
         //remove the line of code above after done developing
         val rv: RecyclerView = findViewById(R.id.recycler_product)
-        val totalQuery =
-            fireDb.collection("Products")
-            .whereEqualTo("category", argument)
+        val totalQuery = when{
+            (argument == "all") -> {
+                fireDb.collection("Products")
+            }
+            else -> {
+                fireDb.collection("Products")
+                    .whereEqualTo("category", argument)
+            }
+        }
         totalQuery.get()
             .addOnSuccessListener {
                 remaining = it.size()
             }
-        val query =
-            fireDb.collection("Products")
-            .whereEqualTo("category", argument)
+        val query = when{
+            (argument == "all") -> {
+                fireDb.collection("Products")
 //            .orderBy("productName", Query.Direction.ASCENDING)
-            .limit(8)
+                    .limit(8)
+            }
+            else -> {
+                fireDb.collection("Products")
+                    .whereEqualTo("category", argument)
+//            .orderBy("productName", Query.Direction.ASCENDING)
+                    .limit(8)
+            }
+        }
         val reference = Firebase.storage.reference
         productAdapter = object : ProductAdapter(query, reference) {
             override fun onDataChanged() {
@@ -94,12 +107,6 @@ class ProductListActivity : AppCompatActivity() {
                     super.onScrolled(recyclerView, dx, dy)
                     if (!rv.canScrollVertically(1)){
                         remaining -= pageSize
-//                        val after = 7 * page
-//                        val next = fireDb.collection("Products")
-//                            .whereEqualTo("category", argument)
-//                            .orderBy("productName", Query.Direction.ASCENDING)
-//                            .startAfter(after)
-//                            .limit(8)
                         if (remaining > 0){
                             productAdapter.updateQuery(argument)
                         }
@@ -107,5 +114,20 @@ class ProductListActivity : AppCompatActivity() {
                 }
             })
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_product_list, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        argument = when{
+            (item.itemId == R.id.glasses_only) -> "Kacamata"
+            (item.itemId == R.id.sunglasses_only) -> "Sunglasses"
+            else -> "all"
+        }
+        showLayout()
+        return super.onOptionsItemSelected(item)
     }
 }

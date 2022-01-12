@@ -1,19 +1,16 @@
 package com.kp.optikjoyoabadi.ui.loginsignup
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.FirebaseError.ERROR_INVALID_CREDENTIAL
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.kp.optikjoyoabadi.MainActivity
-import com.kp.optikjoyoabadi.R
 import com.kp.optikjoyoabadi.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -38,7 +35,6 @@ class LoginActivity : AppCompatActivity() {
 
     private fun updateUI(user: FirebaseUser?){
         if (user != null) {
-            var account: String
             //reference to document header, header of User always uses UID
             val reference = fireDB.collection("Users").document(user.uid)
             //when complete do this
@@ -46,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
                 //if success
                 if (it.isSuccessful){
                     //gets the account type see if its Admin or not
-                    account = it.result?.get("Type") as String
+                    val account = it.result?.get("Type") as String
                     if (account != "User"){
                         //admin then no login
                         Toast.makeText(baseContext, "Authentication failed.",
@@ -105,7 +101,7 @@ class LoginActivity : AppCompatActivity() {
                     Log.w("TAG", "signIn:failure", it.exception)
                     val error = it.exception?.message
                     if (retries > 3){
-                        Toast.makeText(baseContext, "",
+                        Toast.makeText(baseContext, "Mohon reset password anda dengan fitur lupa password",
                                 Toast.LENGTH_SHORT).show()
                     }else{
                         Toast.makeText(baseContext, "$error",

@@ -8,20 +8,17 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.kp.optikjoyoabadi.ui.transactionlist.TransactionListActivity
 
 class FirebaseInstanceIDService: FirebaseMessagingService() {
-    companion object {
-        private val TAG = FirebaseInstanceIDService::class.java.simpleName
-    }
 
     override fun onNewToken(s: String) {
         super.onNewToken(s)
-        Log.d(TAG, "Refreshed token: $s")
-        //send to firebase firestore in user
+        return
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
@@ -31,22 +28,13 @@ class FirebaseInstanceIDService: FirebaseMessagingService() {
         }
     }
 
-    /*private fun logToken(s: String, id: String){
-        val userToken = hashMapOf(
-            "uid" to id,
-            "notifyToken" to s
-        )
-        fireDb.collection("Users")
-            .add(userToken)
-    }*/
-
     private fun sendNotification(remoteMessage: RemoteMessage.Notification) {
         val channelId = NOTIFICATION_CHANNEL_ID
         val channelName = NOTIFICATION_CHANNEL_NAME
         val intent = Intent(this, TransactionListActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(this, 0, intent,
-            PendingIntent.FLAG_ONE_SHOT)
+            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.mipmap.ic_launcher)

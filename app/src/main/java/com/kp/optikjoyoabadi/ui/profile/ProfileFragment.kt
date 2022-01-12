@@ -10,6 +10,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.kp.optikjoyoabadi.databinding.FragmentProfileBinding
 import com.kp.optikjoyoabadi.ui.addresslist.AddressListActivity
+import com.kp.optikjoyoabadi.ui.editprofile.EditProfileActivity
 import com.kp.optikjoyoabadi.ui.loginsignup.LoginActivity
 import com.kp.optikjoyoabadi.ui.transactionlist.TransactionListActivity
 
@@ -59,7 +60,8 @@ class ProfileFragment : Fragment() {
         }
 
         binding.cardSecurity.setOnClickListener {
-
+            val intent = Intent(context, EditProfileActivity::class.java)
+            startActivity(intent)
         }
     }
 }
