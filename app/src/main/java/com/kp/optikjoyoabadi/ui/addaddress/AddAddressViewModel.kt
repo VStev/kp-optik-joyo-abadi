@@ -12,7 +12,7 @@ class AddAddressViewModel : ViewModel() {
     fun submitData(address: Address) {
         val data = hashMapOf(
             "addressId" to address.addressId,
-            "consumerId" to address.consumerId,
+            "UID" to address.UID,
             "recipientName" to address.recipientName,
             "street" to address.street,
             "region" to address.region,
@@ -34,7 +34,7 @@ class AddAddressViewModel : ViewModel() {
     fun submitUpdate(address: Address) {
         val data = hashMapOf(
             "addressId" to address.addressId,
-            "consumerId" to address.consumerId,
+            "UID" to address.UID,
             "recipientName" to address.recipientName,
             "street" to address.street,
             "region" to address.region,

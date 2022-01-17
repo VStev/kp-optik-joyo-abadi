@@ -70,7 +70,7 @@ class CheckoutActivity : AppCompatActivity() {
     private fun setLayout() {
         val addressQuery = auth?.let {
             fireDb.collection("Address")
-                .whereArrayContains("consumerId", it.uid)
+                .whereArrayContains("UID", it.uid)
         }
         addressQuery?.get()?.addOnSuccessListener {
             it.documents.forEach { documentData ->

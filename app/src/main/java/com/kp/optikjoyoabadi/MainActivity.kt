@@ -49,11 +49,13 @@ class MainActivity : AppCompatActivity() {
         }
         if (logged != null) {
             logFCM(logged)
+            logged.reload()
             if (argument == "new") {
                 val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-                builder.setView(R.layout.welcome_alert_dialog_box)
-                val buttonOk = findViewById<Button>(R.id.button_tambah_alamat)
-                val buttonLater = findViewById<TextView>(R.id.button_text_later)
+                val view = layoutInflater.inflate(R.layout.welcome_alert_dialog_box, null)
+                builder.setView(view)
+                val buttonOk = view.findViewById<Button>(R.id.button_tambah_alamat)
+                val buttonLater = view.findViewById<TextView>(R.id.button_text_later)
                 val dialog = builder.create()
                 buttonOk.setOnClickListener {
                     dialog.dismiss()
@@ -64,6 +66,7 @@ class MainActivity : AppCompatActivity() {
                 buttonLater.setOnClickListener {
                     dialog.dismiss()
                 }
+                builder.show()
             }
         }
     }
@@ -80,6 +83,7 @@ class MainActivity : AppCompatActivity() {
                     )
                     .addOnFailureListener {
                         Toast.makeText(baseContext, "Fail to register token", Toast.LENGTH_LONG).show()
+                        auth.signOut()
                     }
         }
     }

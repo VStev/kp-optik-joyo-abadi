@@ -14,7 +14,7 @@
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/drawable/ic_transaction_24p.xml" value="0.3609375" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/drawable/ic_trash_24p.xml" value="0.3609375" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/drawable/welcome_alert_bg.xml" value="0.3609375" />
-        <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/activity_add_address.xml" value="0.34479166666666666" />
+        <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/activity_add_address.xml" value="0.33" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/activity_address_list.xml" value="0.34479166666666666" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/activity_checkout.xml" value="0.33" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/activity_edit_profile.xml" value="0.5" />
@@ -45,7 +45,7 @@
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/item_transactions.xml" value="0.34193840579710144" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/no_address_alert_dialog_box.xml" value="0.25" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/not_yet_verified_alert_dialog_box.xml" value="0.1" />
-        <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/set_qty_note_alert_dialog_box.xml" value="0.1" />
+        <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/set_qty_note_alert_dialog_box.xml" value="0.33" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/welcome_alert_dialog_box.xml" value="0.34479166666666666" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/layout/welcome_alertbox.xml" value="0.3365036231884058" />
         <entry key="..\:/OptikJoyoAbadi/app/src/main/res/menu/menu_address_list.xml" value="0.34479166666666666" />

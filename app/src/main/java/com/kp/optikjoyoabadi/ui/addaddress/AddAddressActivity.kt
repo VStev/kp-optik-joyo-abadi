@@ -3,7 +3,6 @@ package com.kp.optikjoyoabadi.ui.addaddress
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.kp.optikjoyoabadi.databinding.ActivityAddAddressBinding
@@ -37,14 +36,14 @@ class AddAddressActivity : AppCompatActivity() {
     }
 
     private fun setListeners() {
-        when (parameter){
+        val name = binding.addRecipientName.text.toString()
+        val street = binding.addAddressStreet.text.toString()
+        val region = binding.addKabupaten.selectedItem.toString()
+        val postalCode = if (binding.addPostalCode.text.toString() != "") binding.addPostalCode.text.toString().toInt() else 0
+        val city = binding.addCity.text.toString()
+        val phoneNumber = binding.addRecipientPhone.text.toString()
+        when (parameter) {
             "edit" -> {
-                val name = binding.addRecipientName.text.toString()
-                val street = binding.addAddressStreet.text.toString()
-                val region = binding.addKabupaten.selectedItem.toString()
-                val postalCode = binding.addPostalCode.text.toString()
-                val city = binding.addCity.text.toString()
-                val phoneNumber = binding.addRecipientPhone.text.toString()
                 val addressId = editAddressId
                 val address = auth?.let {
                     Address(
@@ -54,7 +53,7 @@ class AddAddressActivity : AppCompatActivity() {
                         street,
                         region,
                         city,
-                        postalCode.toInt(),
+                        postalCode,
                         phoneNumber,
                         false
                     )
@@ -80,13 +79,11 @@ class AddAddressActivity : AppCompatActivity() {
                             randomNumber.toString()
                         }
                     }
-                val name = binding.addRecipientName.text.toString()
-                val street = binding.addAddressStreet.text.toString()
-                val region = binding.addKabupaten.selectedItem.toString()
-                val postalCode = binding.addPostalCode.text.toString()
-                val city = binding.addCity.text.toString()
-                val phoneNumber = binding.addRecipientPhone.text.toString()
-                val addressId = "ADDR" + auth?.uid?.substring(0, 5) + randomized + auth?.uid?.substring(5, 5)
+                val addressId =
+                    "ADDR" + auth?.uid?.substring(0, 5) + randomized + auth?.uid?.substring(
+                        5,
+                        5
+                    )
                 val address = auth?.let {
                     Address(
                         addressId,
@@ -95,10 +92,10 @@ class AddAddressActivity : AppCompatActivity() {
                         street,
                         region,
                         city,
-                        postalCode.toInt(),
+                        postalCode,
                         phoneNumber,
                         false
-                        )
+                    )
                 }
                 if (address != null) {
                     addViewModel.submitData(address)
@@ -121,13 +118,11 @@ class AddAddressActivity : AppCompatActivity() {
                             randomNumber.toString()
                         }
                     }
-                val name = binding.addRecipientName.text.toString()
-                val street = binding.addAddressStreet.text.toString()
-                val region = binding.addKabupaten.selectedItem.toString()
-                val postalCode = binding.addPostalCode.text.toString()
-                val city = binding.addCity.text.toString()
-                val phoneNumber = binding.addRecipientPhone.text.toString()
-                val addressId = "ADDR" + auth?.uid?.substring(0, 5) + randomized + auth?.uid?.substring(5, 5)
+                val addressId =
+                    "ADDR" + auth?.uid?.substring(0, 5) + randomized + auth?.uid?.substring(
+                        5,
+                        5
+                    )
                 val address = auth?.let {
                     Address(
                         addressId,
@@ -136,7 +131,7 @@ class AddAddressActivity : AppCompatActivity() {
                         street,
                         region,
                         city,
-                        postalCode.toInt(),
+                        postalCode,
                         phoneNumber,
                         true
                     )
@@ -149,12 +144,12 @@ class AddAddressActivity : AppCompatActivity() {
     }
 
     private fun showLayout() {
-        when (parameter){
+        when (parameter) {
             "edit" -> {
                 val query = fireDB.collection("Address").document(editAddressId)
                 query.get()
                     .addOnCompleteListener {
-                        if (it.isSuccessful){
+                        if (it.isSuccessful) {
                             //TODO(match region info with array)
                             val address = it.result?.toObject<Address>()
                             binding.addRecipientName.setText(address?.recipientName)

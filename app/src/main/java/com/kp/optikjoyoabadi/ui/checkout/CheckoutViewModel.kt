@@ -25,7 +25,7 @@ class CheckoutViewModel(private val repository: CartRepository): ViewModel() {
         val transactionId = "INV/$uid/${Timestamp.now().toDate()}"
         val transactionData = hashMapOf(
             "transactionId" to transactionId,
-            "consumerId" to uid,
+            "UID" to uid,
             "recipientName" to address.recipientName,
             "street" to address.street,
             "city" to address.city,

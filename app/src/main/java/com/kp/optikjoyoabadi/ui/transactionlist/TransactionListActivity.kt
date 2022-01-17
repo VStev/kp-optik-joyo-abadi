@@ -45,7 +45,7 @@ class TransactionListActivity : AppCompatActivity() {
         val rv: RecyclerView = findViewById(R.id.rv_transaction_item)
         val query = auth.currentUser?.let {
             fireDB.collection("Transactions")
-                    .whereArrayContains("consumerId", it.uid)
+                    .whereArrayContains("UID", it.uid)
         }
         transactionAdapter = object : TransactionAdapter(query) {
             override fun onDataChanged() {

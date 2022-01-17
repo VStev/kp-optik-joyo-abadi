@@ -3,7 +3,6 @@ package com.kp.optikjoyoabadi.ui.addresslist
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -11,9 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
 import com.kp.optikjoyoabadi.R
 import com.kp.optikjoyoabadi.adapters.AddressAdapter
 import com.kp.optikjoyoabadi.databinding.ActivityAddressListBinding
@@ -50,11 +51,12 @@ class AddressListActivity : AppCompatActivity() {
     private fun showLayout() {
         //remove after development
         FirebaseFirestore.setLoggingEnabled(true)
+        auth = Firebase.auth
         val user = auth.currentUser
         val rv: RecyclerView = findViewById(R.id.recycler_address)
         val query = user?.let {
             fireDB.collection("Address")
-                .whereArrayContains("consumerId", it.uid)
+                .whereArrayContains("UID", it.uid)
         }
         //creates new anonymous object that returns the adapter
         addressAdapter = object : AddressAdapter(query) {
@@ -63,10 +65,10 @@ class AddressListActivity : AppCompatActivity() {
                 if (itemCount == 0){
                     flag = true
                     binding.recyclerAddress.visibility = View.GONE
-//                    binding.noItemLayout.visibility = View.VISIBLE
+                    binding.noItemLayout.visibility = View.VISIBLE
                 }else{
                     binding.recyclerAddress.visibility = View.VISIBLE
-//                    binding.noItemLayout.visibility = View.GONE
+                    binding.noItemLayout.visibility = View.GONE
                 }
             }
 

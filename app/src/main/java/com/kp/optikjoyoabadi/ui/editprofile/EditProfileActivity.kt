@@ -1,5 +1,6 @@
 package com.kp.optikjoyoabadi.ui.editprofile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -7,13 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.kp.optikjoyoabadi.R
 import com.kp.optikjoyoabadi.databinding.ActivityEditProfileBinding
-import com.kp.optikjoyoabadi.getFirebaseFirestoreInstance
-import com.kp.optikjoyoabadi.model.User
+import com.kp.optikjoyoabadi.ui.loginsignup.LoginActivity
 
 class EditProfileActivity : AppCompatActivity() {
 
@@ -88,16 +86,18 @@ class EditProfileActivity : AppCompatActivity() {
                                             .addOnCompleteListener {
                                                 //either relog or reauth
                                                 Toast.makeText(applicationContext, "Password berashil dirubah, silahkan login kembali", Toast.LENGTH_SHORT).show()
+                                                auth.signOut()
+                                                startActivity(Intent(this, LoginActivity::class.java))
                                             }
                                 }
                     }
-                    binding.inputOldPassword.setText("")
-                    binding.inputNewPasswordA.setText("")
-                    binding.inputNewPasswordB.setText("")
-                    binding.inputOldPassword.isEnabled = false
-                    binding.inputNewPasswordA.isEnabled = false
-                    binding.inputNewPasswordB.isEnabled = false
-                    binding.buttonSaveEditPassword.setText(R.string.ubah)
+//                    binding.inputOldPassword.setText("")
+//                    binding.inputNewPasswordA.setText("")
+//                    binding.inputNewPasswordB.setText("")
+//                    binding.inputOldPassword.isEnabled = false
+//                    binding.inputNewPasswordA.isEnabled = false
+//                    binding.inputNewPasswordB.isEnabled = false
+//                    binding.buttonSaveEditPassword.setText(R.string.ubah)
                 }
             }
         }

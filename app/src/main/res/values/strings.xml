@@ -73,4 +73,11 @@
     <string name="tambah_alamat">Tambah Alamat</string>
     <string name="tampilkan_semua">Tampilkan semua</string>
     <string name="pilih_alamat">Pilih Alamat</string>
+    <string name="jumlah">Jumlah</string>
+    <string name="catatan">Catatan</string>
+    <string name="not_yet_verified">Anda Belum Terverifikasi</string>
+    <string name="not_yet_verified_message">Mohon cek email anda untuk link verifikasi. Klik tombol verifikasi di bawah untuk mengirimkan email verifikasi ulang.</string>
+    <string name="kirim_ulang">Kirim Ulang</string>
+    <string name="tutup">Tutup</string>
+    <string name="belum_ada_alamat">Belum ada Alamat</string>
 </resources>

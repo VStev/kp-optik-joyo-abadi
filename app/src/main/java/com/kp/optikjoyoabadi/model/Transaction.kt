@@ -4,7 +4,7 @@ import com.google.firebase.Timestamp
 
 data class Transaction(
     val transactionId: String = "",
-    val consumerId: String = "",
+    val UID: String = "",
     val recipientName: String = "",
     val street: String = "",
     val city: String = "",

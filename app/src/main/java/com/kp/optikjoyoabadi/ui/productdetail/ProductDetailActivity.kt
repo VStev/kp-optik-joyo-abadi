@@ -2,6 +2,7 @@ package com.kp.optikjoyoabadi.ui.productdetail
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.ktx.auth
@@ -44,20 +45,29 @@ class ProductDetailActivity : AppCompatActivity() {
             val user = auth.currentUser
             if (user != null) {
                 if (user.isEmailVerified) {
-                    val builder = AlertDialog.Builder(this)
+                    val builder: AlertDialog.Builder = AlertDialog.Builder(this)
                     builder.setView(R.layout.set_qty_note_alert_dialog_box)
-                    productViewModel.addToCart(product, "a", 1)
+                    builder.setPositiveButton(getString(R.string.tambah_ke_keranjang)) { _, _ ->
+                        val note = findViewById<EditText>(R.id.addNote).text.toString()
+                        val qty = findViewById<EditText>(R.id.addQty).text.toString().toInt()
+                        productViewModel.addToCart(product, note, qty)
+                    }
+                    builder.setNegativeButton(getString(R.string.batal)){dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    builder.show()
                 } else {
-                    val builder = AlertDialog.Builder(this)
-                    builder.setTitle("Anda Belum Terverifikasi")
-                    builder.setMessage("Mohon cek email anda untuk link verifikasi. Klik tombol verifikasi di bawah untuk mengirimkan email verifikasi ulang.")
-                    builder.setPositiveButton("Kirim Ulang") { dialog, _ ->
+                    val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+                    builder.setTitle(getString(R.string.not_yet_verified))
+                    builder.setMessage(getString(R.string.not_yet_verified_message))
+                    builder.setPositiveButton(getString(R.string.kirim_ulang)) { dialog, _ ->
                         user.sendEmailVerification()
                         dialog.dismiss()
                     }
-                    builder.setNegativeButton("Tutup"){dialog, _ ->
+                    builder.setNegativeButton(getString(R.string.tutup)){ dialog, _ ->
                         dialog.dismiss()
                     }
+                    builder.show()
                 }
             } else {
                 val intent = Intent(this, LoginActivity::class.java)
