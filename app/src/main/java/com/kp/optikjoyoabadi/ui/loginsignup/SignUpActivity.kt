@@ -1,13 +1,10 @@
 package com.kp.optikjoyoabadi.ui.loginsignup
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.firestore.ktx.firestore
@@ -27,6 +24,7 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.hide()
         setListeners()
     }
 
@@ -34,6 +32,7 @@ class SignUpActivity : AppCompatActivity() {
         super.onBackPressed()
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     private fun updateUI(user: FirebaseUser, name: String) {
@@ -55,6 +54,7 @@ class SignUpActivity : AppCompatActivity() {
                 val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra(MainActivity.EXTRA_ARGUMENT, "new")
                 startActivity(intent)
+                finish()
             }
             .addOnFailureListener {
                 Toast.makeText(baseContext, "Fail to register token", Toast.LENGTH_LONG).show()
@@ -94,6 +94,10 @@ class SignUpActivity : AppCompatActivity() {
                             if (user != null) {
                                 updateUI(user, displayName)
                             }
+                        }else{
+                            val error = it.exception?.message
+                            Toast.makeText(baseContext, "$error",
+                                Toast.LENGTH_SHORT).show()
                         }
                     }
             } else if (binding.inputPassword.text.isNullOrBlank() || binding.inputPassword.text.isNullOrEmpty()

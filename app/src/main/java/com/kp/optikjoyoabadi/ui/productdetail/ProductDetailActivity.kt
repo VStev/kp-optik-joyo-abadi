@@ -35,6 +35,8 @@ class ProductDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityProductDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        title = ""
         productId = intent.getStringExtra(EXTRA_ID).toString()
         showLayout()
         setListeners()
@@ -84,6 +86,8 @@ class ProductDetailActivity : AppCompatActivity() {
                 val image = product.let { it1 -> reference.child("products/${it1.image_url}") }
                 GlideApp.with(binding.root)
                     .load(image)
+//                    .fitCenter()
+                    .centerCrop()
                     .into(binding.productImage)
                 binding.txtProductName.text = product.productName
                 if (product.stock > 0) {

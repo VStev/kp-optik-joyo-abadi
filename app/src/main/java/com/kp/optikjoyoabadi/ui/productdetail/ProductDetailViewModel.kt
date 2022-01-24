@@ -11,9 +11,6 @@ class ProductDetailViewModel(private val repository: CartRepository) : ViewModel
         val cart = Cart(
             product.productId,
             product.productName,
-            product.category,
-            product.shape,
-            product.details,
             note,
             product.price,
             quantity,

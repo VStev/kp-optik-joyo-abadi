@@ -56,6 +56,14 @@ class ProductListActivity : AppCompatActivity() {
         FirebaseFirestore.setLoggingEnabled(true)
         //remove the line of code above after done developing
         val rv: RecyclerView = findViewById(R.id.recycler_product)
+        title = when{
+            (argument == "all") -> {
+                "Semua produk"
+            }
+            else -> {
+                argument
+            }
+        }
         val totalQuery = when{
             (argument == "all") -> {
                 fireDb.collection("Products")
@@ -72,12 +80,14 @@ class ProductListActivity : AppCompatActivity() {
         val query = when{
             (argument == "all") -> {
                 fireDb.collection("Products")
+                    .whereEqualTo("deleted", false)
 //            .orderBy("productName", Query.Direction.ASCENDING)
                     .limit(8)
             }
             else -> {
                 fireDb.collection("Products")
                     .whereEqualTo("category", argument)
+                    .whereEqualTo("deleted", false)
 //            .orderBy("productName", Query.Direction.ASCENDING)
                     .limit(8)
             }
@@ -108,7 +118,7 @@ class ProductListActivity : AppCompatActivity() {
                     if (!rv.canScrollVertically(1)){
                         remaining -= pageSize
                         if (remaining > 0){
-                            productAdapter.updateQuery(argument)
+                            productAdapter.updatePagedQuery(argument)
                         }
                     }
                 }
@@ -127,7 +137,8 @@ class ProductListActivity : AppCompatActivity() {
             (item.itemId == R.id.sunglasses_only) -> "Sunglasses"
             else -> "all"
         }
-        showLayout()
+        title = if (argument == "all") "Semua produk" else argument
+        productAdapter.updateQuery(argument)
         return super.onOptionsItemSelected(item)
     }
 }

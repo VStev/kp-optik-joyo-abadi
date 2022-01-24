@@ -47,6 +47,7 @@ class TransactionDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         transactionId = intent.getStringExtra(EXTRA_ID).toString()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        title = ""
         showLayout()
         setOnClickListeners()
     }

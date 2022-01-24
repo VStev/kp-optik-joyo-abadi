@@ -43,6 +43,7 @@ class PaymentDetailActivity : AppCompatActivity() {
         transactionID = intent.getStringExtra(EXTRA_PAYID).toString()
         payAmt = intent.getIntExtra(EXTRA_PAYMENT, 0)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        title = ""
         showLayout()
         setOnClickListeners()
     }

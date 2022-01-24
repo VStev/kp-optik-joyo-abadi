@@ -9,7 +9,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.kp.optikjoyoabadi.R
-import com.kp.optikjoyoabadi.adapters.CartAdapter
 import com.kp.optikjoyoabadi.adapters.ChangeAddressAdapter
 import com.kp.optikjoyoabadi.adapters.CheckoutAdapter
 import com.kp.optikjoyoabadi.databinding.ActivityCheckoutBinding
@@ -17,6 +16,7 @@ import com.kp.optikjoyoabadi.getFirebaseFirestoreInstance
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.kp.optikjoyoabadi.model.Address
 import com.kp.optikjoyoabadi.model.Cart
+import kotlin.math.ceil
 import kotlin.properties.Delegates
 
 class CheckoutActivity : AppCompatActivity() {
@@ -27,6 +27,7 @@ class CheckoutActivity : AppCompatActivity() {
     private lateinit var itemList: ArrayList<Cart>
     private lateinit var cardAdapter: CheckoutAdapter
     private var subTotal by Delegates.notNull<Int>()
+    private var quantity by Delegates.notNull<Int>()
     private var shipping by Delegates.notNull<Int>()
     private val fireDb = getFirebaseFirestoreInstance()
     private val auth = Firebase.auth.currentUser
@@ -57,7 +58,7 @@ class CheckoutActivity : AppCompatActivity() {
                 override fun onItemClicked(position: Int) {
                     address = addressList[position]
                     displayAddress(address)
-                    updateShippingFeeAndTotal(subTotal, address.city, address.region)
+                    updateShippingFeeAndTotal(subTotal, address.city, address.region, quantity)
                 }
             })
             with(recycler){
@@ -77,7 +78,7 @@ class CheckoutActivity : AppCompatActivity() {
                 val data = documentData.toObject<Address>()
                 if (data != null) {
                     addressList.add(data)
-                    if (data.isMain){
+                    if (data.main){
                         address = data
                     }
                 }
@@ -92,11 +93,12 @@ class CheckoutActivity : AppCompatActivity() {
             Cart.forEach{
                 itemList.add(it)
                 subTotal += (it.price * it.quantity)
+                quantity += it.quantity
             }
             val subText = "Rp. $subTotal"
             binding.txtSubtotal.text = subText
         })
-        updateShippingFeeAndTotal(subTotal, address.city, address.region)
+        updateShippingFeeAndTotal(subTotal, address.city, address.region, quantity)
         displayAddress(address)
     }
 
@@ -109,13 +111,13 @@ class CheckoutActivity : AppCompatActivity() {
         binding.postalCodePenerima.text = address.postalCode.toString()
     }
 
-    private fun updateShippingFeeAndTotal(subTotal: Int, city: String, region: String) {
+    private fun updateShippingFeeAndTotal(subTotal: Int, city: String, region: String, qty: Int) {
         shipping = if (city == "Surabaya" && region == "Jawa Timur"){
-            10000
+            10000 * ceil(qty/4.0).toInt()
         }else if (region.contains("Jawa")){
-            15000
+            15000 * ceil(qty/4.0).toInt()
         }else{
-            25000
+            25000 * ceil(qty/4.0).toInt()
         }
         val shipText = "Rp. $shipping"
         binding.txtShipping.text = shipText

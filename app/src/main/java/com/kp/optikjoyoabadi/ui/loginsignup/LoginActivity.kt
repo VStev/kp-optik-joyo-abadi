@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.FirebaseError
 import com.google.firebase.FirebaseError.ERROR_INVALID_CREDENTIAL
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.kp.optikjoyoabadi.MainActivity
+import com.kp.optikjoyoabadi.R
 import com.kp.optikjoyoabadi.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -24,13 +26,24 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.hide()
         setListeners()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (auth.currentUser != null){
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     private fun updateUI(user: FirebaseUser?){
@@ -52,6 +65,7 @@ class LoginActivity : AppCompatActivity() {
                         Log.d("TAG", "signIn:success")
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
+                        finish()
                     }
                 }else{
                     //when fail to get data
@@ -65,7 +79,14 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setListeners(){
         binding.buttonLogin.setOnClickListener {
-            signIn()
+            if (binding.inputLoginId.text.toString().isEmpty()
+                || binding.inputLoginId.text.toString().isBlank()
+                || binding.inputPassword.text.toString().isEmpty()
+                || binding.inputPassword.text.toString().isBlank()){
+                Toast.makeText(baseContext, getString(R.string.invalid_input_msg), Toast.LENGTH_SHORT).show()
+            }else{
+                signIn()
+            }
         }
 
         binding.buttonSignup.setOnClickListener {
@@ -80,10 +101,10 @@ class LoginActivity : AppCompatActivity() {
             if (email != ""){
                 auth.sendPasswordResetEmail(email)
                     .addOnCompleteListener {
-                        Toast.makeText(baseContext, "Silahkan check email anda untuk reset password", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(baseContext, getString(R.string.reset_pwd_msg), Toast.LENGTH_SHORT).show()
                     }
             }else{
-                Toast.makeText(baseContext, "Email tidak boleh kosong", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, getString(R.string.empty_email_msg), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -101,15 +122,13 @@ class LoginActivity : AppCompatActivity() {
                     Log.w("TAG", "signIn:failure", it.exception)
                     val error = it.exception?.message
                     if (retries > 3){
-                        Toast.makeText(baseContext, "Mohon reset password anda dengan fitur lupa password",
+                        Toast.makeText(baseContext, getString(R.string.please_reset_pwd_msg),
                                 Toast.LENGTH_SHORT).show()
                     }else{
                         Toast.makeText(baseContext, "$error",
                                 Toast.LENGTH_SHORT).show()
                     }
-                    if (it.exception?.equals(ERROR_INVALID_CREDENTIAL) == true){
-                        retries++
-                    }
+                    retries++
                 }
             }
     }

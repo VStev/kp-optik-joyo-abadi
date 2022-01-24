@@ -44,10 +44,12 @@
         <activity
             android:name=".ui.productdetail.ProductDetailActivity"
             android:screenOrientation="portrait"
+            android:parentActivityName=".ui.productlist.ProductListActivity"
             android:exported="false" />
         <activity
             android:name=".ui.transactiondetail.TransactionDetailActivity"
             android:screenOrientation="portrait"
+            android:parentActivityName=".ui.transactionlist.TransactionListActivity"
             android:exported="false" />
         <activity
             android:name=".ui.loginsignup.SignUpActivity"

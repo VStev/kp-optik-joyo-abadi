@@ -29,7 +29,7 @@ open class ProductAdapter(query: Query, private val reference: StorageReference)
             val image = product?.let { reference.child("products/${it.image_url}") }
             GlideApp.with(items.root)
                 .load(image)
-                .override(256,256)
+                .override(320,320)
                 .into(items.productPictureThumb)
             items.root.setOnClickListener {
                 val intent = Intent(items.root.context, ProductDetailActivity::class.java)
@@ -40,12 +40,43 @@ open class ProductAdapter(query: Query, private val reference: StorageReference)
     }
 
     fun updateQuery(argument: String){
+        val query = when {
+            (argument == "all") -> {
+                getFirebaseFirestoreInstance().collection("Products")
+                    .whereEqualTo("deleted", false)
+//            .orderBy("productName", Query.Direction.ASCENDING)
+                    .limit(8)
+            }
+            else -> {
+                getFirebaseFirestoreInstance().collection("Products")
+                    .whereEqualTo("category", argument)
+                    .whereEqualTo("deleted", false)
+//            .orderBy("productName", Query.Direction.ASCENDING)
+                    .limit(8)
+            }
+        }
+        this.setQuery(query)
+    }
+
+    fun updatePagedQuery(argument: String){
         val lastVisible = getSnapshot(itemCount-1)
-        val query = getFirebaseFirestoreInstance().collection("Products")
-                            .whereEqualTo("category", argument)
-//                            .orderBy("productName", Query.Direction.ASCENDING)
-                            .startAfter(lastVisible)
-                            .limit(8)
+        val query = when {
+            (argument == "all") -> {
+                getFirebaseFirestoreInstance().collection("Products")
+                    .whereEqualTo("deleted", false)
+//            .orderBy("productName", Query.Direction.ASCENDING)
+                    .startAfter(lastVisible)
+                    .limit(8)
+            }
+            else -> {
+                getFirebaseFirestoreInstance().collection("Products")
+                    .whereEqualTo("category", argument)
+                    .whereEqualTo("deleted", false)
+//            .orderBy("productName", Query.Direction.ASCENDING)
+                    .startAfter(lastVisible)
+                    .limit(8)
+            }
+        }
         this.setQuery(query)
     }
 

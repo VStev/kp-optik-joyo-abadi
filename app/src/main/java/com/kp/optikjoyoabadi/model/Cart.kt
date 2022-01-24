@@ -16,18 +16,6 @@ data class Cart (
     @NonNull
     var productName: String = "",
 
-    @ColumnInfo(name = "category")
-    @NonNull
-    val category: String = "",
-
-    @ColumnInfo(name = "shape")
-    @NonNull
-    val shape: String = "",
-
-    @ColumnInfo(name = "details")
-    @NonNull
-    val details: String = "",
-
     @ColumnInfo(name = "note")
     var note: String = "",
 

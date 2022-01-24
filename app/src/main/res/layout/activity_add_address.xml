@@ -23,7 +23,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/addRecipientName"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:inputType="text"
             android:lines="1"
             android:maxLength="255"
@@ -47,7 +47,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/addAddressStreet"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:lines="4"
             android:maxLength="255" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -93,7 +93,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/addCity"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:inputType="text"
             android:lines="1"
             android:maxLength="255" />
@@ -116,7 +116,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/addPostalCode"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:inputType="number"
             android:lines="1"
             android:maxLength="255" />
@@ -139,7 +139,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/addRecipientPhone"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:inputType="text"
             android:lines="1"
             android:maxLength="255" />

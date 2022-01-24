@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         argument = intent.getStringExtra(EXTRA_ARGUMENT).toString()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.hide()
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer)
         val navController = navHostFragment?.findNavController()
         if (navController != null) {

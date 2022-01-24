@@ -36,6 +36,7 @@ class TransactionListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityTransactionListBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.hide()
         setContentView()
     }
 
@@ -45,7 +46,7 @@ class TransactionListActivity : AppCompatActivity() {
         val rv: RecyclerView = findViewById(R.id.rv_transaction_item)
         val query = auth.currentUser?.let {
             fireDB.collection("Transactions")
-                    .whereArrayContains("UID", it.uid)
+                    .whereEqualTo("UID", it.uid)
         }
         transactionAdapter = object : TransactionAdapter(query) {
             override fun onDataChanged() {

@@ -80,4 +80,10 @@
     <string name="kirim_ulang">Kirim Ulang</string>
     <string name="tutup">Tutup</string>
     <string name="belum_ada_alamat">Belum ada Alamat</string>
+    <string name="reset_pwd_msg">Silahkan check email anda untuk reset password</string>
+    <string name="empty_email_msg">Email tidak boleh kosong</string>
+    <string name="invalid_input_msg">Harap periksa email atau password anda</string>
+    <string name="please_reset_pwd_msg">Mohon reset password anda dengan fitur lupa password</string>
+    <string name="update_address_success">Sukses mengubah alamat</string>
+    <string name="add_address_success">Sukses menambahkan alamat</string>
 </resources>

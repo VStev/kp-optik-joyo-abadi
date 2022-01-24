@@ -2,6 +2,7 @@ package com.kp.optikjoyoabadi.ui.addresslist
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -28,7 +29,7 @@ class AddressListActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var addressAdapter: AddressAdapter
     private lateinit var binding: ActivityAddressListBinding
-    private var flag by Delegates.notNull<Boolean>()
+    private var flag = false
     private val fireDB = getFirebaseFirestoreInstance()
 
     override fun onStart() {
@@ -44,6 +45,7 @@ class AddressListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddressListBinding.inflate(layoutInflater)
+        title = "Daftar Alamat"
         setContentView(binding.root)
         showLayout()
     }
@@ -56,7 +58,7 @@ class AddressListActivity : AppCompatActivity() {
         val rv: RecyclerView = findViewById(R.id.recycler_address)
         val query = user?.let {
             fireDB.collection("Address")
-                .whereArrayContains("UID", it.uid)
+                .whereEqualTo("UID", it.uid)
         }
         //creates new anonymous object that returns the adapter
         addressAdapter = object : AddressAdapter(query) {
@@ -88,22 +90,21 @@ class AddressListActivity : AppCompatActivity() {
 //                        .whereArrayContains("consumerId", it.uid)
 //                        .whereEqualTo("isMain", false)
 //                }
-                val result = query?.get()
-                if (result != null) {
-                    result.result?.forEach {
+                query?.get()?.addOnSuccessListener { snapshot ->
+                    snapshot?.forEach {
                         val address = it.toObject<Address>()
                         if (address.addressId != addressId){
                             fireDB.collection("Address").document(address.addressId)
                                 .update(
                                     mapOf(
-                                        "isMain" to false
+                                        "main" to false
                                     )
                                 )
                         }else{
                             fireDB.collection("Address").document(address.addressId)
                                 .update(
                                     mapOf(
-                                        "isMain" to true
+                                        "main" to true
                                     )
                                 )
                         }
