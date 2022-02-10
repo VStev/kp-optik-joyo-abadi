@@ -36,6 +36,7 @@ class AddAddressActivity : AppCompatActivity() {
         parameter = intent.getStringExtra(EXTRA_PARAM).toString()
         editAddressId = intent.getStringExtra(EXTRA_ID).toString()
         title = "Tambah Alamat"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setContentView(binding.root)
         showLayout()
         setListeners()
@@ -202,11 +203,9 @@ class AddAddressActivity : AppCompatActivity() {
     }
 
     private fun showLayout() {
-        Log.d("TAG", "showLayout: $parameter")
-        Log.d("TAG", "showLayout: $editAddressId")
-        title = "Ubah Alamat"
         when (parameter) {
             "edit" -> {
+                title = "Ubah Alamat"
                 val query = fireDB.collection("Address").document(editAddressId)
                 query.get()
                     .addOnCompleteListener {

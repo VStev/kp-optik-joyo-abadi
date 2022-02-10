@@ -36,7 +36,7 @@
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/txt_price"
         app:layout_constraintTop_toBottomOf="@+id/txt_price"
-        tools:text="CHIBI YATTA" />
+        tools:text="NAMA PRODUK" />
 
     <TextView
         android:id="@+id/txt_category"
@@ -46,7 +46,7 @@
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/txt_product_name"
         app:layout_constraintTop_toBottomOf="@+id/txt_product_name"
-        tools:text="No u cant have it" />
+        tools:text="KATEGORI" />
 
     <TextView
         android:id="@+id/txt_stock"
@@ -62,27 +62,70 @@
         android:id="@+id/button_atc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/tambah_ke_keranjang"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/txtHeaderDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Detail Barang"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="@+id/txt_stock"
         app:layout_constraintTop_toBottomOf="@+id/txt_stock" />
 
-    <TextView
-        android:id="@+id/txt_product_detail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/button_atc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_atc"
-        tools:text="FROSTBLADE SPECIAL EDITION - A SKYRIM WEAPON MOD
+        app:layout_constraintTop_toBottomOf="@+id/txtHeaderDetail">
+
+        <TextView
+            android:id="@+id/txt_product_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:textSize="18sp"
+            tools:text="FROSTBLADE SPECIAL EDITION - A SKYRIM WEAPON MOD
 -dummydetail-
 Frostblade has finally been ported to Skyrim Special Edition!
 -dummydetail-
 Frostblade is a Skyrim weapon mod and was my first Skyrim mod. It's a smaller mod, but still features a small unmarked quest to acquire the sword. The quest features Asgeir Snow-Shod and a new character I made for the sake of the mod.
 " />
+
+    </androidx.core.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/buttonBeliSekarang"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Beli Sekarang"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_atc"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnPanduanResep"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="@color/white"
+        android:text="panduan mengisi resep"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/txtHeaderDetail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtHeaderDetail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

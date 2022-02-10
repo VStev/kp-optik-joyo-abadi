@@ -1,7 +1,9 @@
 package com.kp.optikjoyoabadi
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -9,8 +11,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.dynamiclinks.ktx.dynamicLinks
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.kp.optikjoyoabadi.databinding.ActivityMainBinding
 import com.kp.optikjoyoabadi.ui.addaddress.AddAddressActivity
@@ -21,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val fireDB = getFirebaseFirestoreInstance()
     private lateinit var argument: String
+    private var fb = Firebase.dynamicLinks
 
     companion object {
         const val EXTRA_ARGUMENT = "old"
@@ -33,6 +39,21 @@ class MainActivity : AppCompatActivity() {
         if (logged != null) {
             logFCM(logged)
         }
+        fb.getDynamicLink(intent)
+            .addOnSuccessListener {
+                var deepLink: Uri? = null
+                if (it != null){
+                    deepLink = it.link
+                    val cred = logged?.email?.let { it1 ->
+                        EmailAuthProvider.getCredentialWithLink(
+                            it1, intent.data.toString())
+                    }
+                    if (cred != null) {
+                        logged.linkWithCredential(cred)
+                    }
+                }
+            }
+            .addOnFailureListener(this) { e -> Log.w("TAG", "getDynamicLink:onFailure", e) }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,24 +72,21 @@ class MainActivity : AppCompatActivity() {
         if (logged != null) {
             logFCM(logged)
             logged.reload()
-            if (argument == "new") {
-                val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-                val view = layoutInflater.inflate(R.layout.welcome_alert_dialog_box, null)
-                builder.setView(view)
-                val buttonOk = view.findViewById<Button>(R.id.button_tambah_alamat)
-                val buttonLater = view.findViewById<TextView>(R.id.button_text_later)
-                val dialog = builder.create()
-                buttonOk.setOnClickListener {
-                    dialog.dismiss()
-                    val intent = Intent(this, AddAddressActivity::class.java)
-                    intent.putExtra(AddAddressActivity.EXTRA_PARAM, "first")
-                    startActivity(intent)
+            fb.getDynamicLink(intent)
+                .addOnSuccessListener {
+                    var deepLink: Uri? = null
+                    if (it != null){
+                        deepLink = it.link
+                        val cred = logged.email?.let { it1 ->
+                            EmailAuthProvider.getCredentialWithLink(
+                                it1, intent.data.toString())
+                        }
+                        if (cred != null) {
+                            logged.linkWithCredential(cred)
+                        }
+                    }
                 }
-                buttonLater.setOnClickListener {
-                    dialog.dismiss()
-                }
-                builder.show()
-            }
+                .addOnFailureListener(this) { e -> Log.w("TAG", "getDynamicLink:onFailure", e) }
         }
     }
 

@@ -35,6 +35,7 @@ open class AddressAdapter(query: Query?) : FirestoreAdapter<AddressAdapter.CardV
                 else -> {
                     items.txtAddressIsmain.text = ""
                     items.txtAddressIsmain.visibility = View.GONE
+                    items.buttonMakeMain.isEnabled = true
                 }
             }
             items.buttonMakeMain.setOnClickListener {

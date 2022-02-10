@@ -7,6 +7,8 @@ import com.kp.optikjoyoabadi.ui.addaddress.AddAddressViewModel
 import com.kp.optikjoyoabadi.ui.cart.CartViewModel
 import com.kp.optikjoyoabadi.ui.checkout.CheckoutViewModel
 import com.kp.optikjoyoabadi.ui.paymentdetail.PaymentDetailViewModel
+import com.kp.optikjoyoabadi.ui.productdetail.ProductDetailViewModel
+import com.kp.optikjoyoabadi.ui.profile.ProfileViewModel
 import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SupportFactory
 import org.koin.android.ext.koin.androidContext
@@ -39,4 +41,6 @@ val viewModelMod = module{
     viewModel { AddAddressViewModel() }
     viewModel { PaymentDetailViewModel() }
     viewModel { CheckoutViewModel(get()) }
+    viewModel { ProductDetailViewModel(get()) }
+    viewModel { ProfileViewModel(get()) }
 }

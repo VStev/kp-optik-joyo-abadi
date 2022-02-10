@@ -31,10 +31,11 @@ class CartAdapter: RecyclerView.Adapter<CartAdapter.CardViewHolder>() {
             val image = reference.child("products/${cartItem.image_url}")
             GlideApp.with(binding.root)
                 .load(image)
+                .override(256,256)
                 .into(binding.productPictureThumb)
             binding.txtItemname.text = cartItem.productName
             binding.txtNote.text = cartItem.note
-            binding.txtPrice.text = cartItem.price.toString()
+            binding.txtPrice.text = "Rp. ${cartItem.price}"
             binding.txtQuantity.text = cartItem.quantity.toString()
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, ProductDetailActivity::class.java)
@@ -49,7 +50,7 @@ class CartAdapter: RecyclerView.Adapter<CartAdapter.CardViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
         val view: View =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_transaction_details, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_cart, parent, false)
         return CardViewHolder(view)
     }
 

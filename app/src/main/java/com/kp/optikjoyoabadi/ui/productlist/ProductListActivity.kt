@@ -135,9 +135,23 @@ class ProductListActivity : AppCompatActivity() {
         argument = when{
             (item.itemId == R.id.glasses_only) -> "Kacamata"
             (item.itemId == R.id.sunglasses_only) -> "Sunglasses"
+            (item.itemId == R.id.softlens_only) -> "Softlens"
             else -> "all"
         }
         title = if (argument == "all") "Semua produk" else argument
+        val totalQuery = when{
+            (argument == "all") -> {
+                fireDb.collection("Products")
+            }
+            else -> {
+                fireDb.collection("Products")
+                    .whereEqualTo("category", argument)
+            }
+        }
+        totalQuery.get()
+            .addOnSuccessListener {
+                remaining = it.size()
+            }
         productAdapter.updateQuery(argument)
         return super.onOptionsItemSelected(item)
     }

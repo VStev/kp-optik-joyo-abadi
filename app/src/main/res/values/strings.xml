@@ -60,7 +60,7 @@
     <string name="nama_penerima">Nama Penerima</string>
     <string name="alamat">Alamat</string>
     <string name="kota">Kota</string>
-    <string name="kabupaten">Kabupaten</string>
+    <string name="provinsi">Provinsi</string>
     <string name="kode_pos">Kode Pos</string>
     <string name="nomor_telpon_penerima">Nomor Telpon Penerima</string>
     <string name="upload_bukti_pembayaran">Upload bukti pembayaran</string>
@@ -86,4 +86,8 @@
     <string name="please_reset_pwd_msg">Mohon reset password anda dengan fitur lupa password</string>
     <string name="update_address_success">Sukses mengubah alamat</string>
     <string name="add_address_success">Sukses menambahkan alamat</string>
+    <string name="keluar">Keluar</string>
+    <string name="pesanan_selesai">Pesanan Selesai</string>
+    <string name="tentang_kami">Tentang kami</string>
+    <string name="belisekarang">Beli Sekarang</string>
 </resources>

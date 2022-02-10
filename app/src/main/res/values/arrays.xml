@@ -36,4 +36,9 @@
         <item>"Papua Barat"</item>
         <item>"Papua"</item>
     </string-array>
+
+    <string-array name="Lensa">
+        <item>"Normal plastik +Rp 0"</item>
+        <item>"Anti Radiasi +Rp 35.000"</item>
+    </string-array>
 </resources>

@@ -22,7 +22,8 @@ class PaymentDetailViewModel: ViewModel() {
         val value = MutableLiveData<String>().apply{
             value = "onProcess"
         }
-        val filename = "PROOF/$id"
+        val filename = "PROOF-$id"
+        val docId = "PAY-$id"
         val uploadTask = storage.child("payments/${filename}").putFile(image, metadata)
         val newData = mapOf(
             "proof" to filename,
@@ -30,7 +31,10 @@ class PaymentDetailViewModel: ViewModel() {
         )
         uploadTask
             .addOnSuccessListener {
-                fireDb.collection("Payment").document(id)
+                fireDb.collection("Transactions").document(id).update(
+                    "status", "UNCONFIRMED"
+                )
+                fireDb.collection("Payment").document(docId)
                     .update(newData)
                     .addOnSuccessListener {
                         value.value = "Success!"

@@ -60,6 +60,7 @@ class LoginActivity : AppCompatActivity() {
                         //admin then no login
                         Toast.makeText(baseContext, "Authentication failed.",
                             Toast.LENGTH_SHORT).show()
+                        auth.signOut()
                     }else{
                         //not admin then admit
                         Log.d("TAG", "signIn:success")

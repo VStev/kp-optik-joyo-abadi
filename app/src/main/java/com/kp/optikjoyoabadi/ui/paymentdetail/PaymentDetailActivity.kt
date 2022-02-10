@@ -6,11 +6,14 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -55,12 +58,22 @@ class PaymentDetailActivity : AppCompatActivity() {
                     Toast.makeText(this, "Bukti bayar belum dipilih, silahkan klik pilih bukti bayar", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
-                    paymentViewModel.submitData(transactionID, imageUri).observe(this, {
-                        when{
-                            (it == "Success!") -> showLayout()
+                    paymentViewModel.submitData(transactionID, imageUri).observe(this) {
+                        when {
+                            (it == "Success!") -> {
+                                Toast.makeText(this, "UPLOAD SUKSES!", Toast.LENGTH_SHORT).show()
+                                binding.paymentDate.text = Timestamp.now().toDate().toString()
+                                binding.buttonPilihGambar.visibility = View.GONE
+                                binding.buttonUpload.visibility = View.GONE
+                            }
+                            (it == "onProcess") -> Toast.makeText(
+                                this,
+                                "UPLOADING",
+                                Toast.LENGTH_SHORT
+                            ).show()
                             else -> Toast.makeText(this, "UPLOAD FAILED", Toast.LENGTH_SHORT).show()
                         }
-                    })
+                    }
                 }
             }
         }
@@ -68,7 +81,7 @@ class PaymentDetailActivity : AppCompatActivity() {
         binding.buttonPilihGambar.setOnClickListener {
             val options = arrayOf<CharSequence>("Choose from Gallery", "Cancel")
             val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-            builder.setTitle("Choose product picture")
+            builder.setTitle("Choose picture")
             builder.setItems(options) { dialog, item ->
                 when {
                     options[item] == "Choose from Gallery" -> {
@@ -97,29 +110,33 @@ class PaymentDetailActivity : AppCompatActivity() {
         }
 
     private fun showLayout() {
-        //remove the line of code below after done developing
-        FirebaseFirestore.setLoggingEnabled(true)
-        //remove the line of code above after done developing
-        val query = fireDB.collection("Payment").document(transactionID)
+        val paymentId = "PAY-$transactionID"
+        val query = fireDB.collection("Payment").document(paymentId)
         val reference = Firebase.storage.reference
         query.get()
             .addOnCompleteListener {
                 val paymentDetail = it.result?.toObject<Payment>()
-                if (paymentDetail?.proof != null) {
+
+                if (paymentDetail?.proof?.isNotEmpty() == true) {
                     if (paymentDetail.transactionId != transactionID){
                         Toast.makeText(baseContext, "TERJADI KESALAHAN DALAM MEMUAT DATA", Toast.LENGTH_SHORT).show()
                     }else{
+                        Log.d("TAG", "showLayout: ${paymentDetail.proof}")
                         binding.invoiceNumber.text = paymentDetail.transactionId
-                        binding.paymentDate.text = paymentDetail.receivedAt.toString()
+                        binding.paymentDate.text = paymentDetail.receivedAt.toDate().toString()
                         binding.totalBayar.text = paymentDetail.amount.toString()
                         binding.buttonUpload.visibility = View.GONE
                         binding.buttonPilihGambar.visibility = View.GONE
-                        val image = reference.child("Payment/${paymentDetail.proof}")
+                        val image = reference.child("payments/${paymentDetail.proof}")
                         Glide.with(binding.root)
                             .load(image)
-                            .override(256,256)
+                            .override(400,400)
                             .into(binding.buktiBayar)
                     }
+                }else{
+                    binding.invoiceNumber.text = transactionID
+                    binding.paymentDate.text = getString(R.string.belum_bayar)
+                    binding.totalBayar.text = paymentDetail?.amount.toString()
                 }
             }
             .addOnFailureListener {
@@ -127,5 +144,12 @@ class PaymentDetailActivity : AppCompatActivity() {
                 binding.paymentDate.text = getString(R.string.belum_bayar)
                 binding.totalBayar.text = payAmt.toString()
             }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home -> onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

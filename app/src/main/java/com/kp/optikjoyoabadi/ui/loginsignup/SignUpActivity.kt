@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.actionCodeSettings
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.firestore.ktx.firestore
@@ -90,7 +92,7 @@ class SignUpActivity : AppCompatActivity() {
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
                             val user = auth.currentUser
-                            user?.sendEmailVerification()
+                            sendEmail(email)
                             if (user != null) {
                                 updateUI(user, displayName)
                             }
@@ -112,5 +114,18 @@ class SignUpActivity : AppCompatActivity() {
                 ).show()
             }
         }
+    }
+
+    private fun sendEmail(email:String){
+        val actionCodeSettings = actionCodeSettings {
+            url = "https://optik-joyo-abadi.firebaseapp.com/?email=${email}"
+            handleCodeInApp = true
+            setAndroidPackageName(
+                "com.kp.optikjoyoabadi",
+                true,
+                null
+            )
+        }
+        auth.sendSignInLinkToEmail(email, actionCodeSettings)
     }
 }

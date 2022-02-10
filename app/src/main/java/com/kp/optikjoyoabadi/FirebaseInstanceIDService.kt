@@ -11,6 +11,7 @@ import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.kp.optikjoyoabadi.ui.transactiondetail.TransactionDetailActivity
+import com.kp.optikjoyoabadi.ui.transactionlist.TransactionListActivity
 
 class FirebaseInstanceIDService: FirebaseMessagingService() {
 
@@ -35,7 +36,7 @@ class FirebaseInstanceIDService: FirebaseMessagingService() {
         val channelName = NOTIFICATION_CHANNEL_NAME
         val intent = Intent(this, TransactionDetailActivity::class.java)
         intent.putExtra(TransactionDetailActivity.EXTRA_ID, transactionId)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
         val pendingIntent = PendingIntent.getActivity(this, 0, intent,
             PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
@@ -49,7 +50,7 @@ class FirebaseInstanceIDService: FirebaseMessagingService() {
         val mNotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT)
+            val channel = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH)
             notificationBuilder.setChannelId(channelId)
             mNotificationManager.createNotificationChannel(channel)
         }

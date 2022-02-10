@@ -46,13 +46,12 @@ class AddressListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddressListBinding.inflate(layoutInflater)
         title = "Daftar Alamat"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setContentView(binding.root)
         showLayout()
     }
 
     private fun showLayout() {
-        //remove after development
-        FirebaseFirestore.setLoggingEnabled(true)
         auth = Firebase.auth
         val user = auth.currentUser
         val rv: RecyclerView = findViewById(R.id.recycler_address)
@@ -80,16 +79,6 @@ class AddressListActivity : AppCompatActivity() {
         }
         addressAdapter.setOnItemClickCallback(object:AddressAdapter.OnItemClickCallback{
             override fun onItemClicked(addressId: String?) {
-//                val notMain = user?.let {
-//                    fireDB.collection("Address")
-//                        .whereArrayContains("consumerId", it.uid)
-//                        .whereEqualTo("isMain", false)
-//                }
-//                val main = user?.let {
-//                    fireDB.collection("Address")
-//                        .whereArrayContains("consumerId", it.uid)
-//                        .whereEqualTo("isMain", false)
-//                }
                 query?.get()?.addOnSuccessListener { snapshot ->
                     snapshot?.forEach {
                         val address = it.toObject<Address>()

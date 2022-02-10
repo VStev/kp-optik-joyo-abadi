@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment"
         android:name="com.kp.optikjoyoabadi.ui.homescreen.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="https://optikjoyoabadi.page.link/n3UL" />
+    </fragment>
     <fragment
         android:id="@+id/cartFragment2"
         android:name="com.kp.optikjoyoabadi.ui.cart.CartFragment"

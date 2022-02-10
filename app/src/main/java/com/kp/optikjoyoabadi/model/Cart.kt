@@ -1,10 +1,13 @@
 package com.kp.optikjoyoabadi.model
 
+import android.os.Parcelable
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(tableName = "cart")
 data class Cart (
     @PrimaryKey
@@ -15,6 +18,10 @@ data class Cart (
     @ColumnInfo(name = "productName")
     @NonNull
     var productName: String = "",
+
+    @ColumnInfo(name = "productType")
+    @NonNull
+    var productType: String = "",
 
     @ColumnInfo(name = "note")
     var note: String = "",
@@ -30,4 +37,4 @@ data class Cart (
     @ColumnInfo(name = "image_url")
     @NonNull
     var image_url: String = ""
-        )
+        ) : Parcelable

@@ -9,6 +9,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
 import com.kp.optikjoyoabadi.R
 import com.kp.optikjoyoabadi.adapters.TransactionAdapter
@@ -36,7 +37,8 @@ class TransactionListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityTransactionListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.hide()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        title = "Daftar Transaksi"
         setContentView()
     }
 
@@ -46,25 +48,27 @@ class TransactionListActivity : AppCompatActivity() {
         val rv: RecyclerView = findViewById(R.id.rv_transaction_item)
         val query = auth.currentUser?.let {
             fireDB.collection("Transactions")
-                    .whereEqualTo("UID", it.uid)
+                .whereEqualTo("UID", it.uid)
+                .orderBy("dateTime", Query.Direction.DESCENDING)
         }
         transactionAdapter = object : TransactionAdapter(query) {
             override fun onDataChanged() {
                 super.onDataChanged()
-                if (itemCount == 0){
+                if (itemCount == 0) {
                     binding.rvTransactionItem.visibility = View.GONE
                     binding.noItemLayout.visibility = View.VISIBLE
-                }else{
+                } else {
                     binding.rvTransactionItem.visibility = View.VISIBLE
                     binding.noItemLayout.visibility = View.GONE
                 }
             }
 
             override fun onError(e: FirebaseFirestoreException) {
-                Snackbar.make(binding.root, "Error connecting to database", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(binding.root, "Error connecting to database", Snackbar.LENGTH_LONG)
+                    .show()
             }
         }
-        with (rv){
+        with(rv) {
             layoutManager = LinearLayoutManager(context)
             adapter = transactionAdapter
         }

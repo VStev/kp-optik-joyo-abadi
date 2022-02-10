@@ -1,6 +1,5 @@
 package com.kp.optikjoyoabadi.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -18,12 +17,10 @@ open class TransactionDetailAdapter(query: Query, private val reference: Storage
     inner class CardViewHolder(private val items: ItemTransactionDetailsBinding) : RecyclerView.ViewHolder(items.root) {
         fun bind(data: DocumentSnapshot) {
             val transactionDetail = data.toObject<TransactionDetail>()
-            Log.d("bind:", "$transactionDetail")
-            //revised
             items.txtNote.text = transactionDetail?.notes
             items.txtQuantity.text = transactionDetail?.quantity.toString()
             items.txtItemname.text = transactionDetail?.productName
-            items.txtPrice.text = transactionDetail?.price.toString()
+            items.txtPrice.text = "Rp. ${transactionDetail?.price.toString()}"
             val image = transactionDetail?.let { reference.child("products/${it.image_url}") }
             GlideApp.with(items.root)
                 .load(image)

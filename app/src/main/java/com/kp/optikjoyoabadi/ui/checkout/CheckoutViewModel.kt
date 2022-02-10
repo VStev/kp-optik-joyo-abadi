@@ -1,14 +1,19 @@
 package com.kp.optikjoyoabadi.ui.checkout
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.ktx.toObject
 import com.kp.optikjoyoabadi.dataobjects.room.CartRepository
 import com.kp.optikjoyoabadi.getFirebaseFirestoreInstance
 import com.kp.optikjoyoabadi.model.Address
 import com.kp.optikjoyoabadi.model.Cart
+import com.kp.optikjoyoabadi.model.Product
 
 class CheckoutViewModel(private val repository: CartRepository): ViewModel() {
     private val fireDB = getFirebaseFirestoreInstance()
+    private val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
 
     val cartItems = {
         repository.getCart()
@@ -19,13 +24,24 @@ class CheckoutViewModel(private val repository: CartRepository): ViewModel() {
         address: Address,
         shipping: Int,
         subTotal: Int,
-        uid: String
-    ) {
+        uid: String,
+        headerTitle: String,
+        isBuyNow: Boolean
+    ): LiveData<String> {
+        val value = MutableLiveData<String>().apply{
+            value = "onProcess"
+        }
         var currentItem = 0
-        val transactionId = "INV/$uid/${Timestamp.now().toDate()}"
+        val dateTime = Timestamp.now().toDate()
+        val random = (1..13)
+            .map { _ -> kotlin.random.Random.nextInt(0, charPool.size) }
+            .map(charPool::get)
+            .joinToString("")
+        val transactionId = "INV-$random"
         val transactionData = hashMapOf(
             "transactionId" to transactionId,
             "UID" to uid,
+            "headerTitle" to headerTitle,
             "recipientName" to address.recipientName,
             "street" to address.street,
             "city" to address.city,
@@ -39,10 +55,11 @@ class CheckoutViewModel(private val repository: CartRepository): ViewModel() {
             "total" to subTotal+shipping,
             "dateTime" to Timestamp.now()
         )
+
         fireDB.collection("Transactions").document(transactionId)
             .set(transactionData)
             .addOnSuccessListener {
-                val paymentId = "PAY/$transactionId"
+                val paymentId = "PAY-$transactionId"
                 val paymentData = hashMapOf(
                     "paymentId" to paymentId,
                     "transactionId" to transactionId,
@@ -65,10 +82,12 @@ class CheckoutViewModel(private val repository: CartRepository): ViewModel() {
                         .set(transactionDetailData)
                     currentItem += 1
                 }
-                repository.nukeCart()
+                if (!isBuyNow) repository.nukeCart()
+                value.postValue("success")
             }
             .addOnFailureListener {
-
+                value.postValue(it.message)
             }
+        return value
     }
 }

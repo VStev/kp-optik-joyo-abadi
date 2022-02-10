@@ -10,6 +10,7 @@ import com.google.firebase.storage.ktx.storage
 import com.kp.optikjoyoabadi.GlideApp
 import com.kp.optikjoyoabadi.R
 import com.kp.optikjoyoabadi.databinding.ItemCartBinding
+import com.kp.optikjoyoabadi.databinding.ItemTransactionDetailsBinding
 import com.kp.optikjoyoabadi.model.Cart
 import com.kp.optikjoyoabadi.ui.productdetail.ProductDetailActivity
 
@@ -26,15 +27,16 @@ class CheckoutAdapter: RecyclerView.Adapter<CheckoutAdapter.CardViewHolder>() {
     }
 
     inner class CardViewHolder(items: View) : RecyclerView.ViewHolder(items) {
-        private val binding = ItemCartBinding.bind(itemView)
+        private val binding = ItemTransactionDetailsBinding.bind(itemView)
         fun bind(cartItem: Cart) {
             val image = reference.child("products/${cartItem.image_url}")
             GlideApp.with(binding.root)
                 .load(image)
+                .override(256,256)
                 .into(binding.productPictureThumb)
             binding.txtItemname.text = cartItem.productName
             binding.txtNote.text = cartItem.note
-            binding.txtPrice.text = cartItem.price.toString()
+            binding.txtPrice.text = "Rp. ${cartItem.price.toString()}"
             binding.txtQuantity.text = cartItem.quantity.toString()
         }
     }

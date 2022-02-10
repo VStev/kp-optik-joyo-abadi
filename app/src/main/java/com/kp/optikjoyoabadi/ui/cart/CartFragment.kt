@@ -40,18 +40,18 @@ class CartFragment : Fragment() {
 
     private fun updateUI(){
         cardAdapter = CartAdapter()
-        cartViewModel.cartItems().observe(viewLifecycleOwner, {Cart ->
-            if (Cart != null){
-                when (Cart.size){
+        cartViewModel.cartItems().observe(viewLifecycleOwner) { Cart ->
+            if (Cart != null) {
+                when (Cart.size) {
                     0 -> {
                         binding.recyclerCart.visibility = View.GONE
                         binding.subtotalCard.visibility = View.GONE
                         binding.emptyCartLayout.visibility = View.VISIBLE
                     }
-                    else ->{
+                    else -> {
                         cardAdapter.setData(Cart)
                         var total = 0
-                        Cart.forEach{
+                        Cart.forEach {
                             total += (it.price * it.quantity)
                         }
                         val subText = "Rp. $total"
@@ -59,7 +59,7 @@ class CartFragment : Fragment() {
                         setListeners()
                     }
                 }
-                cardAdapter.setOnItemClickCallback(object: CartAdapter.OnItemClickCallback{
+                cardAdapter.setOnItemClickCallback(object : CartAdapter.OnItemClickCallback {
                     override fun onItemClicked(product: Cart?, position: Int) {
                         if (product != null) {
                             cartViewModel.delete(product)
@@ -67,17 +67,18 @@ class CartFragment : Fragment() {
                         cardAdapter.notifyItemRemoved(position)
                     }
                 })
-                with(rv){
+                with(rv) {
                     layoutManager = LinearLayoutManager(context)
                     adapter = cardAdapter
                 }
             }
-        })
+        }
     }
 
     private fun setListeners() {
         binding.buttonCheckout.setOnClickListener {
             val intent = Intent(context, CheckoutActivity::class.java)
+            intent.putExtra(CheckoutActivity.EXTRA_BUYNOW, false)
             startActivity(intent)
         }
     }
